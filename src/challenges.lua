@@ -1,0 +1,58 @@
+SMODS.Challenge { -- The Spades-Mans!
+    key = 'incognito',
+    rules = {
+        custom = {
+            { id = "nic_incognito1" },
+            { id = "nic_incognito2" },
+            { id = "nic_incognito3" }
+        },
+    },
+    jokers = {
+        { id = 'j_nic_incognito', eternal = true, edition = 'negative' },
+        { id = 'j_oops', eternal = true, edition = 'negative' },
+        { id = 'j_oops', eternal = true, edition = 'negative' },
+    },
+    deck = {
+        cards = {
+            { s = 'C', r = 'A' },
+            { s = 'D', r = 'A' },
+            { s = 'H', r = 'A' },
+            { s = 'C', r = 'K' },
+            { s = 'D', r = 'K' },
+            { s = 'H', r = 'K' },
+            { s = 'C', r = 'Q' },
+            { s = 'D', r = 'Q' },
+            { s = 'H', r = 'Q' },
+            { s = 'C', r = 'J' },
+            { s = 'D', r = 'J' },
+            { s = 'H', r = 'J' },
+            { s = 'C', r = 'T' },
+            { s = 'D', r = 'T' },
+            { s = 'H', r = 'T' },
+            { s = 'C', r = '9' },
+            { s = 'D', r = '9' },
+            { s = 'H', r = '9' },
+            { s = 'C', r = '8' },
+            { s = 'D', r = '8' },
+            { s = 'H', r = '8' },
+            { s = 'C', r = '7' },
+            { s = 'D', r = '7' },
+            { s = 'H', r = '7' },
+            { s = 'C', r = '6' },
+            { s = 'D', r = '6' },
+            { s = 'H', r = '6' },
+            { s = 'C', r = '5' },
+            { s = 'D', r = '5' },
+            { s = 'H', r = '5' },
+            { s = 'C', r = '4' },
+            { s = 'D', r = '4' },
+            { s = 'H', r = '4' },
+            { s = 'C', r = '3' },
+            { s = 'D', r = '3' },
+            { s = 'H', r = '3' },
+            { s = 'C', r = '2' },
+            { s = 'D', r = '2' },
+            { s = 'H', r = '2' },
+        }
+    }
+}

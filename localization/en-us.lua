@@ -44,7 +44,9 @@ return {
         achievement_descriptions={},
         achievement_names={},
         blind_states={},
-        challenge_names={},
+        challenge_names={
+            c_nic_incognito = "The Spades-Mans!",
+        },
         collabs={},
         dictionary={
             k_nic_incognito = "Incognito",
@@ -60,6 +62,16 @@ return {
         suits_singular={},
         tutorial={},
         v_dictionary={},
-        v_text={},
+        v_text={
+            ch_c_nic_incognito1 = {
+                "You have {C:clubs}Clubs{}, {C:hearts}Hearts{}, {C:diamonds}Diamonds{}",
+            },
+            ch_c_nic_incognito2 = {
+                "But you don't have any {C:spades}Spades{}",
+            },
+            ch_c_nic_incognito3 = {
+                "Let's see how {C:spades}Incognito{} you are",
+            },
+        },
     },
 }
