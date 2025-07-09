@@ -6,11 +6,32 @@ SMODS.Challenge { -- The Spades-Mans!
             { id = "nic_incognito2" },
             { id = "nic_incognito3" }
         },
+        modifiers = {
+            { id = 'joker_slots', value = 3 },
+            { id = 'hands', value = 3 },
+        },
     },
     jokers = {
         { id = 'j_nic_incognito', eternal = true, edition = 'negative' },
         { id = 'j_oops', eternal = true, edition = 'negative' },
         { id = 'j_oops', eternal = true, edition = 'negative' },
+        { id = 'j_oops', eternal = true, edition = 'negative' },
+    },
+    restrictions = {
+        banned_cards = {
+            { id = 'j_gros_michel' },
+            { id = 'j_cavendish' },
+            { id = 'j_8_ball' },
+            { id = 'j_business' },
+            { id = 'j_space' },
+            { id = 'j_hallucination' },
+            { id = 'j_reserved_parking' },
+            { id = 'j_lucky_cat' },
+            { id = 'j_bloodstone' },
+            { id = 'c_wheel_of_fortune' },
+            { id = 'c_temperance' },
+            { id = 'c_soul' },
+        }
     },
     deck = {
         cards = {
