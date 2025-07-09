@@ -1,0 +1,18 @@
+{
+  "id": "nic",
+  "name": "Nic Bullshit Mod",
+  "display_name": "Nic Bullshit",
+  "author": ["Incognito"],
+  "description": "I am trying my best, and that is all in the west",
+  "prefix": "nic",
+  "main_file": "incognito.lua",
+  "version": "1.0.0",
+  "priority": 0,
+  "badge_colour": "000000",
+  "badge_text_colour": "ffffff",
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-0404a)"
+  ],
+  "conflicts": [],
+  "provides": []
+}
