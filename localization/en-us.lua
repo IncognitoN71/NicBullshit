@@ -14,7 +14,7 @@ return {
                     {"{C:spades}Spades{} Can't Be Debuffed"},
                     {"Each {C:spades}Spades{} held in hand Give",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"},
-                },
+                }
             },
             j_nic_technoblade = {
                 name = "Technoblade",
@@ -30,7 +30,14 @@ return {
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"},
                     {"Plays {C:red}Pigstep{} by {C:attention}Lena Raine{}"},
                 }
-            }
+            },
+            j_nic_kasanejokto = {
+                name = "Kasane Jokto",
+                text = {
+                    "{C:attention}Retrigger{} played {C:attention}2s{}",
+                    "an additional {C:attention}nine{} times"
+                }
+            },
         },
         Other={},
         Planet={},
