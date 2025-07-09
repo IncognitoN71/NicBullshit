@@ -45,7 +45,7 @@ return {
         achievement_names={},
         blind_states={},
         challenge_names={
-            c_nic_incognito = "The Spades-Mans!",
+            c_nic_incognito = "OOPS? ALL SWOONS!",
         },
         collabs={},
         dictionary={
