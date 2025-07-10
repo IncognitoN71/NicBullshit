@@ -22,13 +22,13 @@ return {
                     {"Prevents Death if chips scored",
                     "are at least {C:attention}50%{} of required chips ",
                     "{S:1.1,C:red,E:2}self destructs{}"},
+                    {"Plays {C:red}Pigstep{} by {C:attention}Lena Raine{}"},
                     {"When {C:attention}Blind{} is selected, destroy",
                     "Joker to the right and permanently",
                     "Gains {C:attention}triple{} its sell value to {C:red}Mult",
                     "Gains {C:attention}quadruple{} its sell value to {C:blue}Chips",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"},
-                    {"Plays {C:red}Pigstep{} by {C:attention}Lena Raine{}"},
                 }
             },
             j_nic_kasanejokto = {
