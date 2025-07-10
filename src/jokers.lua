@@ -125,7 +125,7 @@ SMODS.Joker{ -- Machinedramon
     rarity = 3,
     cost = 8,
     pos = {x = 4, y = 0},
-    config = { extra = { mult = 0, xmult = 1, odds = 4, nuhuhmult = 2/3} },
+    config = { extra = { mult = 0, xmult = 1, odds = 4 } },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
@@ -154,22 +154,12 @@ SMODS.Joker{ -- Machinedramon
 
         if context.individual and context.cardarea == G.play and not context.end_of_round and not context.blueprint then
             if SMODS.has_enhancement(context.other_card, 'm_steel') then
-                if pseudorandom('j_nic_machinedramon') < G.GAME.probabilities.normal / card.ability.extra.odds then
-                    context.other_card.should_destroy = true
-                    card.ability.extra.mult = (card.ability.extra.mult) + 10
-                    card.ability.extra.xmult = (card.ability.extra.xmult) + 0.5
-                    return { message = "MACHINED!", colour = G.C.BLACK }
-                else
-                    return { message = "NOPE", colour = G.C.RED }
-                end
+                context.other_card.should_destroy = true
+                card.ability.extra.mult = (card.ability.extra.mult) + 15
+                card.ability.extra.xmult = (card.ability.extra.xmult) + 0.5
+                return { message = "MACHINED!", colour = G.C.BLACK }
             end
         end
-
-        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
-            if SMODS.has_enhancement(context.other_card, 'm_steel') then
-                return { xmult = card.ability.extra.nuhuhmult }
-            end
-        end 
 
         if context.joker_main then
             return { 

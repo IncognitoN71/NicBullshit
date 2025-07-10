@@ -1,4 +1,4 @@
-SMODS.Challenge { -- The Spades-Mans!
+SMODS.Challenge { -- OOPS? ALL SWOONS!
     key = 'incognito',
     rules = {
         custom = {
@@ -74,6 +74,32 @@ SMODS.Challenge { -- The Spades-Mans!
             { s = 'C', r = '2' },
             { s = 'D', r = '2' },
             { s = 'H', r = '2' },
+        }
+    }
+}
+
+SMODS.Challenge { -- PAVED WITH METAL!
+    key = 'machinedramon',
+    rules = {
+        custom = {
+            { id = "nic_machinedramon1" },
+        },
+        modifiers = {
+            { id = 'joker_slots', value = 6 },
+            { id = 'hands', value = 2 },
+            { id = 'discards', value = 5 },
+            { id = 'hand_size', value = 12 },
+        },
+    },
+    jokers = {
+        { id = 'j_nic_machinedramon', eternal = true },
+    },
+    restrictions = {
+        banned_cards = {
+            { id = 'j_abstract' },
+            { id = 'j_midas_mask' },
+            { id = 'j_ticket' },
+            { id = 'c_devil' },
         }
     }
 }
