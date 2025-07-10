@@ -41,7 +41,7 @@ return {
             j_nic_machinedramon = {
                 name = "Machinedramon",
                 text = {
-                    {"All {C:attention}unscored{} cards turn into",
+                    {"All cards {C:attention}held in hand{} turn into",
                     "{C:attention}Steel cards{} on {C:attention}final hand{} of round"},
                     {"Played {C:attention}Steel cards{} get ",
                     "Destroyed and Gains",
@@ -65,7 +65,7 @@ return {
         blind_states={},
         challenge_names={
             c_nic_incognito = "OOPS? ALL SWOONS!",
-            c_nic_machinedramon = "PAVED WITH METAL!",
+            c_nic_machinedramon = "THE FUTURE WILL BE PAVED WITH METAL!",
         },
         collabs={},
         dictionary={

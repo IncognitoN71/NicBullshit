@@ -136,19 +136,17 @@ SMODS.Joker{ -- Machinedramon
         if context.destroy_card and context.destroy_card.should_destroy and not context.blueprint then
             return { remove = true }
         end
-        
-        if context.before and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_left == 0 then
-			for k, v in ipairs(context.full_hand) do
-				if not SMODS.in_scoring(v, context.scoring_hand) then
-					v:set_ability('m_steel', nil, true)
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							v:juice_up()
-                            play_sound("nic_machinedramon")
-							return true
-						end
-					}))
-				end
+
+        if context.individual and context.cardarea == G.play and not context.blueprint and G.GAME.current_round.hands_left == 0 then
+			for k, v in ipairs(G.hand.cards) do
+				v:set_ability('m_steel', nil, true)
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						v:juice_up()
+                        play_sound("nic_machinedramon")
+						return true
+					end
+				}))
 			end
 		end
 

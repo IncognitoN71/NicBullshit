@@ -78,7 +78,7 @@ SMODS.Challenge { -- OOPS? ALL SWOONS!
     }
 }
 
-SMODS.Challenge { -- PAVED WITH METAL!
+SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
     key = 'machinedramon',
     rules = {
         custom = {
