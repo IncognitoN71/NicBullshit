@@ -1,7 +1,14 @@
 return {
     descriptions = {
         Back={},
-        Blind={},
+        Blind={
+            bl_nic_monarch = {
+                name = "The Monarch",
+                text = {
+                    "Fuck Your Kings",
+                }
+            }
+        },
         Edition={},
         Enhanced={},
         Joker = {

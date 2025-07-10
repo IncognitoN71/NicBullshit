@@ -99,11 +99,17 @@ SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
             { id = 'j_abstract' },
             { id = 'j_midas_mask' },
             { id = 'j_ticket' },
+            { id = 'j_burglar' },
             { id = 'c_devil' },
             { id = 'c_ectoplasm'},
+            { id = 'v_grabber' },
+            { id = 'v_nacho_tong' },
         },
         banned_tags = {
             { id = 'tag_garbage' },
-        }
+        },
+        banned_other = {
+            { id = 'bl_needle', type = 'blind' },
+        },
     }
 }
