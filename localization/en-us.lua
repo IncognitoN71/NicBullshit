@@ -41,7 +41,7 @@ return {
             j_nic_machinedramon = {
                 name = "Machinedramon",
                 text = {
-                    {"{C:attention}Last hand{} of round, all {C:attention}unscored{}",
+                    {"{C:attention}Final hand{} of round, all {C:attention}unscored{}",
                     "cards turn into {C:attention}Steel cards{}"},
                     {"{C:attention}Steel cards{} gives {X:mult,C:white} X0.67{} Mult",
                     "with the {X:mult,C:white} X1.5{} Mult"},
@@ -51,7 +51,7 @@ return {
                     "{C:inactive}(Currently {C:red}+#3#{}{C:inactive} Mult)",
                     "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)"},
                 }
-            }
+            },
         },
         Other={},
         Planet={},

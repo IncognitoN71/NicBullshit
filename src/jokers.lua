@@ -11,7 +11,6 @@ end
 -- Uncommon
 
 SMODS.Joker{ -- Kasane Jokto
-    name = "Kasane Jokto",
     key = "kasanejokto",
     blueprint_compat = true,
     eternal_compat = true,
@@ -43,7 +42,6 @@ SMODS.Joker{ -- Kasane Jokto
 -- Rare
 
 SMODS.Joker{ -- Technoblade
-    name = "Technoblade",
     key = "technoblade",
     blueprint_compat = true,
     eternal_compat = true,
@@ -118,7 +116,6 @@ SMODS.Joker{ -- Technoblade
 }
 
 SMODS.Joker{ -- Machinedramon
-    name = "Machinedramon",
     key = "machinedramon",
     blueprint_compat = true,
     eternal_compat = true,
@@ -186,7 +183,6 @@ SMODS.Joker{ -- Machinedramon
 -- Legendary
 
 SMODS.Joker{ -- Incognito
-    name = "Incognito",
     key = "incognito",
     blueprint_compat = true,
     eternal_compat = true,
