@@ -137,7 +137,7 @@ SMODS.Joker{ -- Machinedramon
             return { remove = true }
         end
 
-        if context.individual and context.cardarea == G.play and not context.blueprint and G.GAME.current_round.hands_left == 0 then
+        if context.individual and context.cardarea == G.play and context.other_card == context.scoring_hand[1] and not context.blueprint and G.GAME.current_round.hands_left == 0 then
 			for k, v in ipairs(G.hand.cards) do
 				v:set_ability('m_steel', nil, true)
 				G.E_MANAGER:add_event(Event({

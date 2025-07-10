@@ -86,7 +86,7 @@ SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
         },
         modifiers = {
             { id = 'joker_slots', value = 6 },
-            { id = 'hands', value = 2 },
+            { id = 'hands', value = 1 },
             { id = 'discards', value = 5 },
             { id = 'hand_size', value = 12 },
         },
@@ -100,6 +100,7 @@ SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
             { id = 'j_midas_mask' },
             { id = 'j_ticket' },
             { id = 'c_devil' },
+            { id = 'c_ectoplasm'}
         }
     }
 }
