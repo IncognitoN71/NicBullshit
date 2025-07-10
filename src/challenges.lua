@@ -4,7 +4,7 @@ SMODS.Challenge { -- OOPS? ALL SWOONS!
         custom = {
             { id = "nic_incognito1" },
             { id = "nic_incognito2" },
-            { id = "nic_incognito3" }
+            { id = "nic_incognito3" },
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
@@ -100,7 +100,10 @@ SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
             { id = 'j_midas_mask' },
             { id = 'j_ticket' },
             { id = 'c_devil' },
-            { id = 'c_ectoplasm'}
+            { id = 'c_ectoplasm'},
+        },
+        banned_tags = {
+            { id = 'tag_garbage' },
         }
     }
 }
