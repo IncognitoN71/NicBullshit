@@ -4,6 +4,8 @@ SMODS.current_mod.set_debuff = function(card)
     end
 end
 
+-- card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "71!", colour = HEX("d0d0d0")})
+
 -- Common
 
 -- Uncommon
@@ -115,6 +117,72 @@ SMODS.Joker{ -- Technoblade
     end
 }
 
+SMODS.Joker{ -- Machinedramon
+    name = "Machinedramon",
+    key = "machinedramon",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 8,
+    pos = {x = 4, y = 0},
+    config = { extra = { mult = 0, xmult = 1, odds = 4, nuhuhmult = 2/3} },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
+        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.mult, card.ability.extra.xmult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.destroy_card and context.destroy_card.should_destroy and not context.blueprint then
+            return { remove = true }
+        end
+        
+        if context.before and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_left == 0 then
+			for k, v in ipairs(context.full_hand) do
+				if not SMODS.in_scoring(v, context.scoring_hand) then
+					v:set_ability('m_steel', nil, true)
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							v:juice_up()
+                            play_sound("nic_machinedramon")
+							return true
+						end
+					}))
+				end
+			end
+		end
+
+        if context.individual and context.cardarea == G.play and not context.end_of_round and not context.blueprint then
+            if SMODS.has_enhancement(context.other_card, 'm_steel') then
+                if pseudorandom('j_nic_machinedramon') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                    context.other_card.should_destroy = true
+                    card.ability.extra.mult = (card.ability.extra.mult) + 10
+                    card.ability.extra.xmult = (card.ability.extra.xmult) + 0.5
+                    return { message = "MACHINED!", colour = G.C.BLACK }
+                else
+                    return { message = "NOPE", colour = G.C.RED }
+                end
+            end
+        end
+
+        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
+            if SMODS.has_enhancement(context.other_card, 'm_steel') then
+                return { xmult = card.ability.extra.nuhuhmult }
+            end
+        end 
+
+        if context.joker_main then
+            return { 
+                mult = card.ability.extra.mult, 
+                xmult = card.ability.extra.xmult 
+            }
+        end
+	end
+}
+
 -- Legendary
 
 SMODS.Joker{ -- Incognito
@@ -141,14 +209,12 @@ SMODS.Joker{ -- Incognito
         end
 
         if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
-            if pseudorandom('j_nic_incognito') < G.GAME.probabilities.normal / card.ability.extra.odds then
-                if not (context.other_card:is_suit("Spades")) then
+            if not (context.other_card:is_suit("Spades")) then
+                if pseudorandom('j_nic_incognito') < G.GAME.probabilities.normal / card.ability.extra.odds then
                     context.other_card.should_destroy = true
                     card.ability.extra.xmult = (card.ability.extra.xmult) + 1
                     return { message = "SWOON!", colour = HEX("d0d0d0") }
-                end
-            else
-                if not (context.other_card:is_suit("Spades")) then
+                else
                     return { message = "NOPE!", colour = G.C.BLACK }
                 end
             end
@@ -156,8 +222,11 @@ SMODS.Joker{ -- Incognito
         
         if context.individual and context.cardarea == G.hand and not context.end_of_round then
             if context.other_card:is_suit("Spades") then
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "71!", colour = HEX("d0d0d0")})
-                return { xmult = card.ability.extra.xmult }
+                return {
+                    message = "71!", 
+                    colour = HEX("d0d0d0"),
+                    xmult = card.ability.extra.xmult,  
+                }
             end
         end
     end

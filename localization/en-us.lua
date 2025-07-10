@@ -38,6 +38,20 @@ return {
                     "an additional {C:attention}nine{} times"
                 }
             },
+            j_nic_machinedramon = {
+                name = "Machinedramon",
+                text = {
+                    {"{C:attention}Last hand{} of round, all {C:attention}unscored{}",
+                    "cards turn into {C:attention}Steel cards{}"},
+                    {"{C:attention}Steel cards{} gives {X:mult,C:white} X0.67{} Mult",
+                    "with the {X:mult,C:white} X1.5{} Mult"},
+                    {"{C:attention}Steel cards{} have a {C:green}#1# in #2#{} chance",
+                    "to be Destroyed and",
+                    "Gains {C:red}+10{} Mult and {X:red,C:white}X0.5{}",
+                    "{C:inactive}(Currently {C:red}+#3#{}{C:inactive} Mult)",
+                    "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)"},
+                }
+            }
         },
         Other={},
         Planet={},

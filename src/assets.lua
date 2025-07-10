@@ -30,7 +30,12 @@ SMODS.Sound{ -- Pigstep
     pitch = 1,
 }
 
-SMODS.Sound{ -- TechnobladeNeverDies
+SMODS.Sound{ -- Technoblade Never Dies
     key = "technoblade",
     path = "technoblade.ogg",
+}
+
+SMODS.Sound{ -- Machinedramon
+    key = "machinedramon",
+    path = "machinedramon.ogg",
 }
