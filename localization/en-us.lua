@@ -71,9 +71,8 @@ return {
                 text = {
                     {"When {C:attention}Blind{} is defeated, You can",
                     "buy {C:attention}One Item{} for {C:green}Free{} in the {C:attention}Shop{}",
-                    "{C:red}Vouchers and Packs Don't Count{}",
+                    "Also {C:attention}#2#{} free {C:green}Reroll",
                     "{C:inactive}(Currently: #1#)"},
-                    {"Also {C:attention}#2#{} free {C:green}Reroll"},
                 },
             },
         },

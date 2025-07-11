@@ -1,11 +1,3 @@
-SMODS.current_mod.set_debuff = function(card)
-    if next(SMODS.find_card("j_nic_incognito")) and card.playing_card and card:is_suit("Spades") then
-        return "prevent_debuff"
-    end
-end
-
--- card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "71!", colour = HEX("d0d0d0")})
-
 -- Common
 
 SMODS.Joker{ -- Button
@@ -13,7 +5,7 @@ SMODS.Joker{ -- Button
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 1,
     cost = 3,
@@ -29,7 +21,7 @@ SMODS.Joker{ -- Button
             if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
                 card.ability.extra.xmult = 0.01
                 card:juice_up(10, 10)
-                return { play_sound("nic_explosion") }
+                return { play_sound("nic_explosion"), message = "BOOM!", colour = G.C.RED }
             else
                 card.ability.extra.xmult = (card.ability.extra.xmult) + 0.01
             end
@@ -48,7 +40,7 @@ SMODS.Joker{ -- Sly Cooper
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 1,
     cost = 3,
@@ -70,11 +62,17 @@ SMODS.Joker{ -- Sly Cooper
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             card.ability.extra.slycooper_remaining = 0
+            return { message = "ACTIVE!", colour = G.C.RED }
         end
-        if card.ability.extra.slycooper_remaining == 0 and context.buying_card and context.card.cost > 0 then
-            card.ability.extra.slycooper_remaining = 1
-            context.card.cost = 0
-            return { message = "SNATCH!", colour = G.C.RED }
+        if card.ability.extra.slycooper_remaining == 0 then
+            if context.buying_card or context.nic_buying_booster or context.nic_buying_voucher then
+                card.ability.extra.slycooper_remaining = 1
+                context.card.cost = 0
+                SMODS.calculate_effect({
+                    message = 'SNATCH!',
+                    colour = G.C.RED,
+                },context.card)
+            end
         end
     end
 }
@@ -86,7 +84,7 @@ SMODS.Joker{ -- Kasane Jokto
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 2,
     cost = 5,
@@ -117,7 +115,7 @@ SMODS.Joker{ -- Technoblade
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
@@ -191,7 +189,7 @@ SMODS.Joker{ -- Machinedramon
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
@@ -246,7 +244,7 @@ SMODS.Joker{ -- Incognito
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = false,
+    discovered = true,
     atlas = 'nicjokers',
     rarity = 4,
     cost = 20,
@@ -290,11 +288,3 @@ SMODS.Joker{ -- Incognito
         end
     end
 }
-
-local lcpref = Controller.L_cursor_press -- Cryptid
-function Controller:L_cursor_press(x, y)
-    lcpref(self, x, y)
-    if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
-        SMODS.calculate_context({ cry_press = true })
-    end
-end
