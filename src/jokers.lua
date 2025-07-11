@@ -71,9 +71,10 @@ SMODS.Joker{ -- Sly Cooper
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             card.ability.extra.slycooper_remaining = 0
         end
-        if card.ability.extra.slycooper_remaining == 0 and context.buying_card then
+        if card.ability.extra.slycooper_remaining == 0 and context.buying_card and context.card.cost > 0 then
             card.ability.extra.slycooper_remaining = 1
             context.card.cost = 0
+            return { message = "SNATCH!", colour = G.C.RED }
         end
     end
 }
@@ -225,7 +226,7 @@ SMODS.Joker{ -- Machinedramon
                 context.other_card.should_destroy = true
                 card.ability.extra.mult = (card.ability.extra.mult) + 15
                 card.ability.extra.xmult = (card.ability.extra.xmult) + 0.5
-                return { message = "MACHINED!", colour = G.C.BLACK }
+                return { message = "ASSEMBLE!", colour = G.C.BLACK }
             end
         end
 
