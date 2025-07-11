@@ -66,6 +66,16 @@ return {
                     "to reset back to {X:red,C:white}X0.01{} Mult"},
                 }
             },
+            j_nic_slycooper = {
+                name = "Sly Cooper",
+                text = {
+                    {"When {C:attention}Blind{} is defeated, You can",
+                    "buy {C:attention}One Item{} for {C:green}Free{} in the {C:attention}Shop{}",
+                    "{C:red}Vouchers and Packs Don't Count{}",
+                    "{C:inactive}(Currently: #1#)"},
+                    {"Also {C:attention}#2#{} free {C:green}Reroll"},
+                },
+            },
         },
         Other={},
         Planet={},
@@ -97,20 +107,23 @@ return {
         suits_plural={},
         suits_singular={},
         tutorial={},
-        v_dictionary={},
+        v_dictionary={
+            nic_slycooper_active = "Active!",
+            nic_slycooper_inactive = "Inactive!",
+        },
         v_text={
             ch_c_nic_incognito1 = {
-                "You have {C:clubs}Clubs{}, {C:hearts}Hearts{}, {C:diamonds}Diamonds{}",
+                "You have {C:clubs}Clubs{}, {C:hearts}Hearts{}, {C:diamonds}Diamonds{}"
             },
             ch_c_nic_incognito2 = {
-                "But you don't have any {C:spades}Spades{}",
+                "But you don't have any {C:spades}Spades{}"
             },
             ch_c_nic_incognito3 = {
-                "Let's see how {C:spades}Incognito{} you are",
+                "Let's see how {C:spades}Incognito{} you are"
             },
             ch_c_nic_machinedramon1 = {
                 "MACHINEDRAMON"
-            }
+            },
         },
     },
 }

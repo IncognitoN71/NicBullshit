@@ -13,7 +13,7 @@ SMODS.Joker{ -- Button
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = true,
+    discovered = false,
     atlas = 'nicjokers',
     rarity = 1,
     cost = 3,
@@ -43,6 +43,41 @@ SMODS.Joker{ -- Button
     end
 }
 
+SMODS.Joker{ -- Sly Cooper
+    key = "slycooper",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 1,
+    cost = 3,
+    pos = {x = 3, y = 1},
+    config = { extra = { rerolls = 1, slycooper_remaining = 1 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } }, card.ability.extra.rerolls } }
+    end,
+
+    add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(card.ability.extra.rerolls)
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(-card.ability.extra.rerolls)
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            card.ability.extra.slycooper_remaining = 0
+        end
+        if card.ability.extra.slycooper_remaining == 0 and context.buying_card then
+            card.ability.extra.slycooper_remaining = 1
+            context.card.cost = 0
+        end
+    end
+}
+
 -- Uncommon
 
 SMODS.Joker{ -- Kasane Jokto
@@ -50,7 +85,7 @@ SMODS.Joker{ -- Kasane Jokto
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = true,
+    discovered = false,
     atlas = 'nicjokers',
     rarity = 2,
     cost = 5,
@@ -81,7 +116,7 @@ SMODS.Joker{ -- Technoblade
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = true,
+    discovered = false,
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
@@ -155,7 +190,7 @@ SMODS.Joker{ -- Machinedramon
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = true,
+    discovered = false,
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
@@ -210,7 +245,7 @@ SMODS.Joker{ -- Incognito
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
-    discovered = true,
+    discovered = false,
     atlas = 'nicjokers',
     rarity = 4,
     cost = 20,
