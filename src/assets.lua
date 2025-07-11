@@ -49,6 +49,11 @@ SMODS.Sound{ -- Explosion
     path = "explosion.ogg",
 }
 
+SMODS.Sound{ -- Metal Gear Solid Alert
+    key = "metalalert",
+    path = "metalalert.ogg",
+}
+
 SMODS.Sound{ -- Machinedramon
     key = "machinedramon",
     path = "machinedramon.ogg",

@@ -69,10 +69,11 @@ return {
             j_nic_slycooper = {
                 name = "Sly Cooper",
                 text = {
-                    {"When {C:attention}Blind{} is defeated, You can",
-                    "buy {C:attention}One Item{} for {C:green}Free{} in the {C:attention}Shop{}",
-                    "Also {C:attention}#2#{} free {C:green}Reroll",
-                    "{C:inactive}(Currently: #1#)"},
+                    {"When {C:attention}Blind{} is defeated, Buy",
+                    "{C:attention}One Item{} for {C:green}Free{} in the {C:attention}Shop{},",
+                    "{C:green}#1# in #2#{} chance you get",
+                    "{C:red}Caught{} and {C:attention}Pay Double{}",
+                    "{C:inactive}(Currently: #3#)"},
                 },
             },
         },

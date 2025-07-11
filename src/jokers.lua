@@ -45,18 +45,10 @@ SMODS.Joker{ -- Sly Cooper
     rarity = 1,
     cost = 3,
     pos = {x = 3, y = 1},
-    config = { extra = { rerolls = 1, slycooper_remaining = 1 } },
+    config = { extra = { slycooper_remaining = 1, odds = 4 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } }, card.ability.extra.rerolls } }
-    end,
-
-    add_to_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(card.ability.extra.rerolls)
-    end,
-
-    remove_from_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(-card.ability.extra.rerolls)
+        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } } } }
     end,
 
     calculate = function(self, card, context)
@@ -65,13 +57,22 @@ SMODS.Joker{ -- Sly Cooper
             return { message = "ACTIVE!", colour = G.C.RED }
         end
         if card.ability.extra.slycooper_remaining == 0 then
-            if context.buying_card or context.nic_buying_booster or context.nic_buying_voucher then
+            if (context.buying_card or context.nic_buying_booster or context.nic_buying_voucher) and context.card.cost > 0 then
                 card.ability.extra.slycooper_remaining = 1
-                context.card.cost = 0
-                SMODS.calculate_effect({
-                    message = 'SNATCH!',
-                    colour = G.C.RED,
-                },context.card)
+                if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                    context.card.cost = context.card.cost * 2
+                    SMODS.calculate_effect({
+                        message = 'CAUGHT!',
+                        colour = G.C.RED,
+                        play_sound('nic_metalalert'),
+                    },context.card)
+                else 
+                    context.card.cost = 0
+                    SMODS.calculate_effect({
+                        message = 'SNATCH!',
+                        colour = G.C.GREEN,
+                    },context.card)
+                end
             end
         end
     end
