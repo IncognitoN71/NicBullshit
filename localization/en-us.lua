@@ -52,9 +52,18 @@ return {
                     "{C:attention}Steel cards{} on {C:attention}final hand{} of round"},
                     {"Played {C:attention}Steel cards{} get ",
                     "Destroyed and Gains",
-                    "{C:red}+15{} Mult and {X:red,C:white}X0.5{}",
+                    "{C:red}+15{} Mult and {X:red,C:white}X0.5{} Mult",
                     "{C:inactive}(Currently {C:red}+#3#{}{C:inactive} Mult)",
                     "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)"},
+                }
+            },
+            j_nic_button = {
+                name = "Button",
+                text = {
+                    {"When {C:attention}Clicked{} Gains {X:red,C:white}X0.01{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult}"},
+                    {"{C:attention}Button{} has a {C:green}#1# in #2#{} chance",
+                    "to reset back to {X:red,C:white}X0.01{} Mult"},
                 }
             },
         },

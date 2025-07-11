@@ -18,7 +18,7 @@ SMODS.Atlas { -- Modicon
   key = "modicon",
   px = 32,
   py = 32,
-  path = "modicon.png"
+  path = "modicon.png" 
 }
 
 SMODS.Sound{ -- Black Knife
@@ -42,6 +42,11 @@ SMODS.Sound{ -- Pigstep
 SMODS.Sound{ -- Technoblade Never Dies
     key = "technoblade",
     path = "technoblade.ogg",
+}
+
+SMODS.Sound{ -- Explosion
+    key = "explosion",
+    path = "explosion.ogg",
 }
 
 SMODS.Sound{ -- Machinedramon

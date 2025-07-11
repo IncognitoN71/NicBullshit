@@ -8,6 +8,41 @@ end
 
 -- Common
 
+SMODS.Joker{ -- Button
+    key = "button",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 1,
+    cost = 3,
+    pos = {x = 2, y = 1},
+    config = { extra = { xmult = 0.01, odds = 1000 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.xmult } }
+    end,
+    
+    calculate = function(self, card, context)
+        if context.cry_press and card.states.hover.is == true then
+            if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                card.ability.extra.xmult = 0.01
+                card:juice_up(10, 10)
+                return { play_sound("nic_explosion") }
+            else
+                card.ability.extra.xmult = (card.ability.extra.xmult) + 0.01
+            end
+        end
+
+        if context.joker_main then
+            return { 
+                xmult = card.ability.extra.xmult 
+            }
+        end
+    end
+}
+
 -- Uncommon
 
 SMODS.Joker{ -- Kasane Jokto
@@ -188,6 +223,10 @@ SMODS.Joker{ -- Incognito
     end,
     
     calculate = function(self, card, context)
+        if context.cry_press and card.states.hover.is == true then
+            card.ability.extra.xmult = (card.ability.extra.xmult) + 1
+        end
+            
         if context.destroy_card and context.destroy_card.should_destroy and not context.blueprint then
             return { remove = true }
         end
@@ -215,3 +254,11 @@ SMODS.Joker{ -- Incognito
         end
     end
 }
+
+local lcpref = Controller.L_cursor_press -- Cryptid
+function Controller:L_cursor_press(x, y)
+    lcpref(self, x, y)
+    if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+        SMODS.calculate_context({ cry_press = true })
+    end
+end
