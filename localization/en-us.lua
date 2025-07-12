@@ -17,7 +17,7 @@ return {
                 text = {
                     {"Each Non {C:spades}Spades{} Suits held in hand",
                     "have a {C:green}#1# in #2#{} chance to be",
-                    "Destroyed and Gains {X:red,C:white}X1{}"},
+                    "Destroyed and Gains {X:mult,C:white}X1{}"},
                     {"{C:spades}Spades{} Can't Be Debuffed"},
                     {"Each {C:spades}Spades{} held in hand Give",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)"},
@@ -32,7 +32,7 @@ return {
                     {"Plays {C:red}Pigstep{} by {C:attention}Lena Raine{}"},
                     {"When {C:attention}Blind{} is selected, destroy",
                     "Joker to the right and permanently",
-                    "Gains {C:attention}triple{} its sell value to {C:red}Mult",
+                    "Gains {C:attention}triple{} its sell value to {C:mult}Mult",
                     "Gains {C:attention}quadruple{} its sell value to {C:blue}Chips",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"},
@@ -48,22 +48,22 @@ return {
             j_nic_machinedramon = {
                 name = "Machinedramon",
                 text = {
-                    {"All cards {C:attention}held in hand{} turn into",
+                    {"All cards held in hand turn into",
                     "{C:attention}Steel cards{} on {C:attention}final hand{} of round"},
                     {"Played {C:attention}Steel cards{} get ",
                     "Destroyed and Gains",
-                    "{C:red}+15{} Mult and {X:red,C:white}X0.5{} Mult",
-                    "{C:inactive}(Currently {C:red}+#3#{}{C:inactive} Mult)",
+                    "{C:mult}+15{} Mult and {X:mult,C:white}X0.5{} Mult",
+                    "{C:inactive}(Currently {C:mult}+#3#{}{C:inactive} Mult)",
                     "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)"},
                 }
             },
             j_nic_button = {
                 name = "Button",
                 text = {
-                    {"When {C:attention}Clicked{} Gains {X:red,C:white}X0.01{} Mult",
+                    {"When {C:attention}Clicked{} Gains {X:mult,C:white}X0.01{} Mult",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult}"},
                     {"{C:attention}Button{} has a {C:green}#1# in #2#{} chance",
-                    "to reset back to {X:red,C:white}X0.01{} Mult"},
+                    "to reset back to {X:mult,C:white}X0.01{} Mult"},
                 }
             },
             j_nic_slycooper = {
@@ -74,8 +74,23 @@ return {
                     "{C:green}#1# in #2#{} chance you get",
                     "{C:red}Caught{} and {C:attention}Pay Double{}",
                     "{C:inactive}(Currently: #3#)"},
-                },
+                }
             },
+            j_nic_stalagmite = {
+                name = "Stalagmite",
+                text = {
+                    {"{C:attention}Unscored Cards{} in {C:attention}final hand{} of",
+                    "round turn into {C:attention}Stone Cards{}"},
+                    {"Each played {C:attention}Stone Card{}",
+                    "turns {C:dark_edition}Negative{} and increases",
+                    "{C:attention}Stalgamite{} Chips and Mult by",
+                    "{C:chips}+25{} Chips and {C:mult}+25{} Mult"},
+                    {"{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult",
+                    "for each {C:attention}Stone Card{} held in hand",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)"},
+                }
+            }
         },
         Other={},
         Planet={},

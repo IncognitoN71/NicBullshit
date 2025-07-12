@@ -185,6 +185,72 @@ SMODS.Joker{ -- Technoblade
     end
 }
 
+SMODS.Joker{ -- Stalagmite
+    key = "stalagmite",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 8,
+    pos = {x = 4, y = 1},
+    config = { extra = { chips = 50, mult = 50 } },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
+
+        local stone_tally = 0
+        if G.hand then
+            if G.hand.cards then
+                for _, v in ipairs(G.hand.cards) do
+                    if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
+                end
+            end
+        end
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.chips * stone_tally, card.ability.extra.mult * stone_tally } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if SMODS.has_enhancement(context.other_card, 'm_stone') then
+                card.ability.extra.chips = card.ability.extra.chips + 25
+                card.ability.extra.mult = card.ability.extra.mult + 25
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:set_edition('e_negative')
+                        return true
+                    end
+                }))
+            end
+        end
+
+        if context.individual and context.cardarea == "unscored" and G.GAME.current_round.hands_left == 0 then
+            local other_card = context.other_card
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    other_card:juice_up()
+                    other_card:set_ability('m_stone')
+                    return true
+                end
+            }))
+        end
+
+        if context.joker_main then
+            local stone_tally = 0
+            for _, v in ipairs(G.hand.cards) do
+                if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
+            end
+            return {
+                chips = card.ability.extra.chips * stone_tally,
+                mult = card.ability.extra.mult * stone_tally
+            }
+        end
+    end
+}
+
 SMODS.Joker{ -- Machinedramon
     key = "machinedramon",
     blueprint_compat = true,
