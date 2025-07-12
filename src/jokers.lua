@@ -10,7 +10,7 @@ SMODS.Joker{ -- Button
     rarity = 1,
     cost = 3,
     pos = {x = 2, y = 1},
-    config = { extra = { xmult = 0.01, odds = 1000 } },
+    config = { extra = { xmult = 0.05, odds = 100 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.xmult } }
@@ -19,11 +19,11 @@ SMODS.Joker{ -- Button
     calculate = function(self, card, context)
         if context.cry_press and card.states.hover.is == true then
             if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
-                card.ability.extra.xmult = 0.01
+                card:start_dissolve({G.C.RED})
                 card:juice_up(10, 10)
                 return { play_sound("nic_explosion"), message = "BOOM!", colour = G.C.RED }
             else
-                card.ability.extra.xmult = (card.ability.extra.xmult) + 0.01
+                card.ability.extra.xmult = (card.ability.extra.xmult) + 0.05
             end
         end
 
