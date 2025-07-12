@@ -221,6 +221,7 @@ SMODS.Joker{ -- Stalagmite
                     func = function()
                         other_card:juice_up()
                         other_card:set_edition('e_negative')
+                        play_sound("nic_dripstone")
                         return true
                     end
                 }))
@@ -233,6 +234,7 @@ SMODS.Joker{ -- Stalagmite
                 func = function()
                     other_card:juice_up()
                     other_card:set_ability('m_stone')
+                    play_sound("nic_dripstone")
                     return true
                 end
             }))

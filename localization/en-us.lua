@@ -33,7 +33,7 @@ return {
                     {"When {C:attention}Blind{} is selected, destroy",
                     "Joker to the right and permanently",
                     "Gains {C:attention}triple{} its sell value to {C:mult}Mult",
-                    "Gains {C:attention}quadruple{} its sell value to {C:blue}Chips",
+                    "Gains {C:attention}quadruple{} its sell value to {C:chips}Chips",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"},
                 }
@@ -83,12 +83,12 @@ return {
                     "round turn into {C:attention}Stone Cards{}"},
                     {"Each played {C:attention}Stone Card{}",
                     "turns {C:dark_edition}Negative{} and increases",
-                    "{C:attention}Stalgamite{} Chips and Mult by",
-                    "{C:chips}+25{} Chips and {C:mult}+25{} Mult"},
-                    {"{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult",
+                    "{C:attention}Stalgamite{} {C:mult}Mult{} and {C:chips}Chips{} by",
+                    "{C:mult}+25{} Mult and {C:chips}+25{} Chips"},
+                    {"{C:mult}+#2#{} Mult and {C:chips}+#1#{} Chips",
                     "for each {C:attention}Stone Card{} held in hand",
-                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)",
-                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)"},
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"},
                 }
             }
         },
