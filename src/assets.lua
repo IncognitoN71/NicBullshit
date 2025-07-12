@@ -39,14 +39,9 @@ SMODS.Sound{ -- Pigstep
     pitch = 1,
 }
 
-SMODS.Sound{ -- Technoblade Never Dies
-    key = "technoblade",
-    path = "technoblade.ogg",
-}
-
-SMODS.Sound{ -- Explosion
-    key = "explosion",
-    path = "explosion.ogg",
+SMODS.Sound{ -- Click
+    key = "click",
+    path = "click.ogg",
 }
 
 SMODS.Sound{ -- Dripstone
@@ -54,12 +49,27 @@ SMODS.Sound{ -- Dripstone
     path = "dripstone.ogg",
 }
 
-SMODS.Sound{ -- Metal Gear Solid Alert
-    key = "metalalert",
-    path = "metalalert.ogg",
+SMODS.Sound{ -- Duck
+    key = "duck",
+    path = "duck.ogg",
+}
+
+SMODS.Sound{ -- Explosion
+    key = "explosion",
+    path = "explosion.ogg",
 }
 
 SMODS.Sound{ -- Machinedramon
     key = "machinedramon",
     path = "machinedramon.ogg",
+}
+
+SMODS.Sound{ -- Metal Gear Solid Alert
+    key = "metalalert",
+    path = "metalalert.ogg",
+}
+
+SMODS.Sound{ -- Technoblade Never Dies
+    key = "technoblade",
+    path = "technoblade.ogg",
 }

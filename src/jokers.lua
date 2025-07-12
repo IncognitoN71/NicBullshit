@@ -17,14 +17,20 @@ SMODS.Joker{ -- Button
     end,
     
     calculate = function(self, card, context)
-        if context.cry_press and card.states.hover.is == true then
+        if context.key_press_space then
             if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
                 card:start_dissolve({G.C.RED})
                 card:juice_up(10, 10)
                 return { play_sound("nic_explosion"), message = "BOOM!", colour = G.C.RED }
             else
                 card.ability.extra.xmult = (card.ability.extra.xmult) + 0.05
+                card:juice_up(0.5, 0.5)
+                return { play_sound("nic_click") }
             end
+        end
+        if context.key_press_d then
+            card:juice_up(0.5, 0.5)
+            return { play_sound("nic_duck") }
         end
 
         if context.joker_main then
@@ -45,10 +51,15 @@ SMODS.Joker{ -- Sly Cooper
     rarity = 1,
     cost = 3,
     pos = {x = 3, y = 1},
-    config = { extra = { slycooper_remaining = 1, odds = 4 } },
+    config = { extra = { oldshopsize = 3, slycooper_remaining = 1, odds = 4 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } } } }
+        return { vars = { 
+            (G.GAME and G.GAME.probabilities.normal or 1), 
+            card.ability.extra.odds, 
+            localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } }, 
+            card.ability.extra.oldshopsize } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -128,9 +139,6 @@ SMODS.Joker{ -- Technoblade
     end,
 
     calculate = function(self, card, context)
-        if not to_big then
-            function to_big(x) return x end
-        end
         if context.setting_blind and not context.blueprint then
             local my_pos = nil
             for i = 1, #G.jokers.cards do
@@ -195,7 +203,7 @@ SMODS.Joker{ -- Stalagmite
     rarity = 3,
     cost = 8,
     pos = {x = 4, y = 1},
-    config = { extra = { chips = 50, mult = 50 } },
+    config = { extra = { chips = 50, mult = 50, extra = 2 } },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
@@ -208,7 +216,7 @@ SMODS.Joker{ -- Stalagmite
                 end
             end
         end
-        return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.chips * stone_tally, card.ability.extra.mult * stone_tally } }
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.chips * stone_tally, card.ability.extra.mult * stone_tally, card.ability.extra } }
     end,
 
     calculate = function(self, card, context)

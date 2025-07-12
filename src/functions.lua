@@ -4,6 +4,10 @@ SMODS.current_mod.set_debuff = function(card) -- Debuff
     end
 end
 
+to_big = to_big or function(num)
+    return num
+end
+
 nic = {} -- Vouchers/Boosters
 
 function nic_ctx(context)
@@ -35,6 +39,21 @@ function Controller:L_cursor_press(x, y)
     if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
         SMODS.calculate_context({ cry_press = true })
     end
+end
+
+local nicmodpress = love.keypressed
+function love.keypressed(key)
+    if key == "space" then
+        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+            SMODS.calculate_context({ key_press_space = true })
+        end
+    end
+    if key == "d" then
+        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+            SMODS.calculate_context({ key_press_d = true })
+        end
+    end
+    return (nicmodpress(key))
 end
 
 -- card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "71!", colour = HEX("d0d0d0")})

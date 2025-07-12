@@ -60,7 +60,7 @@ return {
             j_nic_button = {
                 name = "Button",
                 text = {
-                    {"When {C:attention}Clicked{} Gains {X:mult,C:white}X0.05{} Mult",
+                    {"When {C:attention}Space{} is Pressed, Gains {X:mult,C:white}X0.05{} Mult",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult}"},
                     {"{C:attention}Button{} has a {C:green}#1# in #2#{} chance",
                     "to delete itself :3"},
