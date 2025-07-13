@@ -41,6 +41,8 @@ SMODS.Joker{ -- Button
     end
 }
 
+-- Uncommon
+
 SMODS.Joker{ -- Sly Cooper
     key = "slycooper",
     blueprint_compat = false,
@@ -48,8 +50,8 @@ SMODS.Joker{ -- Sly Cooper
     unlocked = true,
     discovered = true,
     atlas = 'nicjokers',
-    rarity = 1,
-    cost = 3,
+    rarity = 2,
+    cost = 6,
     pos = {x = 3, y = 1},
     config = { extra = { oldshopsize = 3, slycooper_remaining = 1, odds = 4 } },
 
@@ -61,6 +63,18 @@ SMODS.Joker{ -- Sly Cooper
             card.ability.extra.oldshopsize } 
         }
     end,
+
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.shop.joker_max = G.GAME.shop.joker_max + 1
+        if G.shop then
+            G.shop:recalculate()
+            G.shop_jokers.T.w = 3.2*G.CARD_W
+        end
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+		G.GAME.shop.joker_max = G.GAME.shop.joker_max - 1
+	end,
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
@@ -84,37 +98,6 @@ SMODS.Joker{ -- Sly Cooper
                         colour = G.C.GREEN,
                     },context.card)
                 end
-            end
-        end
-    end
-}
-
--- Uncommon
-
-SMODS.Joker{ -- Kasane Jokto
-    key = "kasanejokto",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 2,
-    cost = 5,
-    pos = {x = 3, y = 0},
-    config = { extra = { repetitions = 9 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult } }
-    end,
-
-    calculate = function(self, card, context)
-        if context.cardarea == G.play and context.repetition and not context.repetition_only then
-            if context.other_card:get_id() == 2 then
-                return {
-                    message = localize('k_again_ex'),
-                    repetitions = card.ability.extra.repetitions,
-                    card = card,
-                }
             end
         end
     end
@@ -312,6 +295,54 @@ SMODS.Joker{ -- Machinedramon
             }
         end
 	end
+}
+
+-- Teto
+
+SMODS.Joker{ -- Kasane Jokto
+    key = "kasanejokto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = "nic_teto",
+    cost = 5,
+    pos = {x = 3, y = 0},
+    config = { extra = { repetitions = 9 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.mult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.cardarea == G.play and context.repetition and not context.repetition_only then
+            if context.other_card:get_id() == 2 then
+                return {
+                    message = localize('k_again_ex'),
+                    repetitions = card.ability.extra.repetitions,
+                    card = card,
+                }
+            end
+        end
+    end
+}
+
+SMODS.Joker{ -- Ambassador Teto
+    key = "ambassadorteto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = "nic_teto",
+    cost = 5,
+    pos = {x = 2, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = {} }
+    end
 }
 
 -- Legendary

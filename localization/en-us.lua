@@ -69,6 +69,7 @@ return {
             j_nic_slycooper = {
                 name = "Sly Cooper",
                 text = {
+                    {"+1 Extra {C:attention}Shop{} Slot"},
                     {"When {C:attention}Blind{} is defeated, Buy",
                     "{C:attention}One Item{} for {C:green}Free{} in the {C:attention}Shop{},",
                     "{C:green}#1# in #2#{} chance you get",
@@ -89,6 +90,12 @@ return {
                     "for each {C:attention}Stone Card{} held in hand",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"},
+                }
+            },
+            j_nic_ambassadorteto = {
+                name = "Ambassador Teto",
+                text = {
+                    "All I Do Is Cough Blood",
                 }
             }
         },
@@ -111,6 +118,7 @@ return {
         collabs={},
         dictionary={
             k_nic_incognito = "Incognito",
+            k_nic_teto = "Teto",
             ph_nic_technoblade = "SAVED BY TECHNOBLADE NEVER DIES!",
         },
         high_scores={},
