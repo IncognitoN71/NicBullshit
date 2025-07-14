@@ -194,7 +194,7 @@ SMODS.Joker{ -- Stalagmite
         local stone_tally = 0
         if G.hand then
             if G.hand.cards then
-                for _, v in ipairs(G.hand.cards) do
+                for k, v in ipairs(G.hand.cards) do
                     if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
                 end
             end
@@ -233,7 +233,7 @@ SMODS.Joker{ -- Stalagmite
 
         if context.joker_main then
             local stone_tally = 0
-            for _, v in ipairs(G.hand.cards) do
+            for k, v in ipairs(G.hand.cards) do
                 if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
             end
             return {
@@ -321,7 +321,7 @@ SMODS.Joker{ -- Kasane Jokto
                 return {
                     message = localize('k_again_ex'),
                     repetitions = card.ability.extra.repetitions,
-                    card = card,
+                    card = card
                 }
             end
         end
@@ -338,10 +338,62 @@ SMODS.Joker{ -- Ambassador Teto
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 2, y = 2},
-    config = { extra = {} },
+    config = { extra = { xmult = 1.5 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
+            if context.other_card:is_suit("Clubs") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Diamonds')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Diamonds") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Spades')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Spades") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Hearts')
+                        return true
+                    end
+                }))
+            end
+            if not context.other_card:is_suit("Hearts") then
+                return { message = "COUGH!", colour = G.C.RED }
+            end
+        end
+
+        if context.individual and context.cardarea == G.hand and not context.end_of_round then
+            if context.other_card:is_suit("Hearts") then
+                if context.other_card:get_id() == 2 then
+                    return {
+                        xmult = card.ability.extra.xmult + 0.5
+                    }
+                else
+                    return {
+                        xmult = card.ability.extra.xmult
+                    }
+                end
+            end
+        end
     end
 }
 
@@ -390,7 +442,7 @@ SMODS.Joker{ -- Incognito
                 return {
                     message = "71!", 
                     colour = HEX("d0d0d0"),
-                    xmult = card.ability.extra.xmult,  
+                    xmult = card.ability.extra.xmult
                 }
             end
         end

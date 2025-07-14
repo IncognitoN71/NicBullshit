@@ -14,6 +14,13 @@ SMODS.Atlas{ -- Blinds
     frames = 21,
 }
 
+SMODS.Atlas{ -- Boosters
+    key = 'nicboosters',
+    path = 'nicboosters.png',
+    px = 71,
+    py = 96,
+}
+
 SMODS.Atlas { -- Modicon
   key = "modicon",
   px = 32,
@@ -72,4 +79,9 @@ SMODS.Sound{ -- Metal Gear Solid Alert
 SMODS.Sound{ -- Technoblade Never Dies
     key = "technoblade",
     path = "technoblade.ogg",
+}
+
+SMODS.Sound{ -- Teto Oh My God My Penis
+    key = "tetoohmygodmypenis",
+    path = "tetoohmygodmypenis.ogg",
 }

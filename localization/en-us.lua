@@ -80,14 +80,14 @@ return {
             j_nic_stalagmite = {
                 name = "Stalagmite",
                 text = {
-                    {"{C:attention}Unscored Cards{} in {C:attention}final hand{} of",
-                    "round turn into {C:attention}Stone Cards{}"},
-                    {"Each played {C:attention}Stone Card{}",
+                    {"{C:attention}Unscored cards{} in {C:attention}final hand{} of",
+                    "round turn into {C:attention}Stone cards{}"},
+                    {"Each played {C:attention}Stone card{}",
                     "turns {C:dark_edition}Negative{} and increases",
                     "{C:attention}Stalgamite{} {C:mult}Mult{} and {C:chips}Chips{} by",
                     "{C:mult}+25{} Mult and {C:chips}+25{} Chips"},
                     {"{C:mult}+#2#{} Mult and {C:chips}+#1#{} Chips",
-                    "for each {C:attention}Stone Card{} held in hand",
+                    "for each {C:attention}Stone card{} held in hand",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"},
                 }
@@ -95,7 +95,15 @@ return {
             j_nic_ambassadorteto = {
                 name = "Ambassador Teto",
                 text = {
-                    "All I Do Is Cough Blood",
+                    {"All cards held in hand",
+                    "change {C:attention}suits{} in this order",
+                    "{C:clubs}Clubs{} > {C:diamonds}Diamonds{} >",
+                    "{C:spades}Spades{} > {C:hearts}Hearts{}",
+                    "{C:inactive}(Stops at {C:hearts}Hearts{C:inactive})"},
+                    {"All {C:hearts}Hearts{} held in",
+                    "hand give {X:mult,C:white}X1.5{} Mult",
+                    "All {C:attention}2{} of {C:hearts}Hearts{} held in",
+                    "hand give {X:mult,C:white}X2{} Mult"},
                 }
             }
         },

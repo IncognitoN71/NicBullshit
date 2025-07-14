@@ -1,5 +1,6 @@
 assert(SMODS.load_file("src/assets.lua"))()
 assert(SMODS.load_file("src/blinds.lua"))()
+assert(SMODS.load_file("src/boosters.lua"))()
 assert(SMODS.load_file("src/challenges.lua"))()
 assert(SMODS.load_file("src/functions.lua"))()
 assert(SMODS.load_file("src/jokers.lua"))()
