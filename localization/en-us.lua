@@ -53,14 +53,15 @@ return {
                     {"Played {C:attention}Steel cards{} get ",
                     "Destroyed and Gains",
                     "{C:mult}+15{} Mult and {X:mult,C:white}X0.5{} Mult",
-                    "{C:inactive}(Currently {C:mult}+#3#{}{C:inactive} Mult)",
-                    "{C:inactive}(Currently {X:mult,C:white} X#4# {C:inactive} Mult)"},
+                    "{C:inactive}(Currently {C:mult}+#1#{}{C:inactive} Mult)",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)"},
                 }
             },
             j_nic_button = {
                 name = "Button",
                 text = {
-                    {"When {C:attention}Space{} is Pressed, Gains {X:mult,C:white}X0.05{} Mult",
+                    {"When {C:attention}Clicked or Space{} is Pressed,",
+                    "Gains {X:mult,C:white}X0.05{} Mult",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult}"},
                     {"{C:attention}Button{} has a {C:green}#1# in #2#{} chance",
                     "to delete itself :3"},

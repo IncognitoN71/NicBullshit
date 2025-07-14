@@ -10,15 +10,16 @@ SMODS.Joker{ -- Button
     rarity = 1,
     cost = 3,
     pos = {x = 2, y = 1},
-    config = { extra = { xmult = 0.05, odds = 100 } },
+    config = { extra = { xmult = 0.05, odds = 100, chance = 1} },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.xmult } }
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
+        return {vars = {new_numerator, new_denominator, card.ability.extra.xmult}}
     end,
     
     calculate = function(self, card, context)
-        if context.key_press_space then
-            if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        if context.key_press_space or (context.cry_press and card.states.hover.is == true) then
+            if SMODS.pseudorandom_probability(card, ('j_nic_button'), 1, card.ability.extra.odds) then
                 card:start_dissolve({G.C.RED})
                 card:juice_up(10, 10)
                 return { play_sound("nic_explosion"), message = "BOOM!", colour = G.C.RED }
@@ -29,10 +30,11 @@ SMODS.Joker{ -- Button
             end
         end
         if context.key_press_d then
+            card.ability.extra.odds = pseudorandom('duck', 1, 500)
             card:juice_up(0.5, 0.5)
             return { play_sound("nic_duck") }
         end
-
+        
         if context.joker_main then
             return { 
                 xmult = card.ability.extra.xmult 
@@ -56,9 +58,9 @@ SMODS.Joker{ -- Sly Cooper
     config = { extra = { oldshopsize = 3, slycooper_remaining = 1, odds = 4 } },
 
     loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
         return { vars = { 
-            (G.GAME and G.GAME.probabilities.normal or 1), 
-            card.ability.extra.odds, 
+            new_numerator, new_denominator,
             localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } }, 
             card.ability.extra.oldshopsize } 
         }
@@ -84,7 +86,7 @@ SMODS.Joker{ -- Sly Cooper
         if card.ability.extra.slycooper_remaining == 0 then
             if (context.buying_card or context.nic_buying_booster or context.nic_buying_voucher) and context.card.cost > 0 then
                 card.ability.extra.slycooper_remaining = 1
-                if pseudorandom('j_nic_button') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                if SMODS.pseudorandom_probability(card, ('j_nic_slycooper'), 1, card.ability.extra.odds) then
                     context.card.cost = context.card.cost * 2
                     SMODS.calculate_effect({
                         message = 'CAUGHT!',
@@ -266,18 +268,19 @@ SMODS.Joker{ -- Machinedramon
             return { remove = true }
         end
 
-        if context.individual and context.cardarea == G.play and context.other_card == context.scoring_hand[1] and not context.blueprint and G.GAME.current_round.hands_left == 0 then
-			for k, v in ipairs(G.hand.cards) do
-				v:set_ability('m_steel', nil, true)
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						v:juice_up()
+        if context.individual and context.cardarea == G.hand and not context.blueprint and G.GAME.current_round.hands_left == 0 then
+            if context.other_card then
+			    local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:set_ability('m_steel')
                         play_sound("nic_machinedramon")
-						return true
-					end
-				}))
-			end
-		end
+                        return true
+                    end
+                }))
+            end
+        end
 
         if context.individual and context.cardarea == G.play and not context.end_of_round and not context.blueprint then
             if SMODS.has_enhancement(context.other_card, 'm_steel') then
@@ -439,7 +442,8 @@ SMODS.Joker{ -- Incognito
     config = { extra = { xmult = 1, odds = 7 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.xmult } }
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
+        return {vars = {new_numerator, new_denominator, card.ability.extra.xmult}}
     end,
     
     calculate = function(self, card, context)
@@ -453,7 +457,7 @@ SMODS.Joker{ -- Incognito
 
         if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
             if not (context.other_card:is_suit("Spades")) then
-                if pseudorandom('j_nic_incognito') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                if SMODS.pseudorandom_probability(card, ('j_nic_incognito'), 1, card.ability.extra.odds) then
                     context.other_card.should_destroy = true
                     card.ability.extra.xmult = (card.ability.extra.xmult) + 1
                     return { message = "SWOON!", colour = HEX("d0d0d0") }
