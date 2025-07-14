@@ -13,7 +13,7 @@ SMODS.Booster{
     atlas = 'nicboosters',
     pos = {x = 0,y = 0},
     discovered = true,
-    weight = 0.50,
+    weight = 0,
     cost = 4,
     config = {
         extra = 3,

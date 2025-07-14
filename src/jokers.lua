@@ -297,6 +297,32 @@ SMODS.Joker{ -- Machinedramon
 	end
 }
 
+--[[SMODS.Joker{ -- Reroll Gimmick
+    key = "yup",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 10,
+    pos = {x = 3, y = 0},
+    config = { extra = { repetitions = 9 } },
+
+     add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(2)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(-2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.reroll_shop then
+            G.GAME.current_round.free_rerolls = 2
+        end
+    end
+}]]
+
 -- Teto
 
 SMODS.Joker{ -- Kasane Jokto
@@ -344,7 +370,7 @@ SMODS.Joker{ -- Ambassador Teto
         return { vars = { card.ability.extra.xmult } }
     end,
 
-    calculate = function(self, card, context)
+    calculate = function(self, card, context)        
         if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
             if context.other_card:is_suit("Clubs") then
                 local other_card = context.other_card
@@ -377,7 +403,7 @@ SMODS.Joker{ -- Ambassador Teto
                 }))
             end
             if not context.other_card:is_suit("Hearts") then
-                return { message = "COUGH!", colour = G.C.RED }
+                return { message = "BLOOD!", colour = G.C.RED }
             end
         end
 
@@ -385,7 +411,7 @@ SMODS.Joker{ -- Ambassador Teto
             if context.other_card:is_suit("Hearts") then
                 if context.other_card:get_id() == 2 then
                     return {
-                        xmult = card.ability.extra.xmult + 0.5
+                        xmult = card.ability.extra.xmult + 1.5
                     }
                 else
                     return {

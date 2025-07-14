@@ -103,7 +103,7 @@ return {
                     {"All {C:hearts}Hearts{} held in",
                     "hand give {X:mult,C:white}X1.5{} Mult",
                     "All {C:attention}2{} of {C:hearts}Hearts{} held in",
-                    "hand give {X:mult,C:white}X2{} Mult"},
+                    "hand give {X:mult,C:white}X3{} Mult"},
                 }
             }
         },
