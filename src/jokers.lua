@@ -256,11 +256,11 @@ SMODS.Joker{ -- Machinedramon
     rarity = 3,
     cost = 8,
     pos = {x = 4, y = 0},
-    config = { extra = { mult = 0, xmult = 1, odds = 4 } },
+    config = { extra = { mult = 0, xmult = 1 } },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
-        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.mult, card.ability.extra.xmult } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.xmult } }
     end,
 
     calculate = function(self, card, context)
@@ -457,23 +457,41 @@ SMODS.Joker{ -- Incognito
 
         if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
             if not (context.other_card:is_suit("Spades")) then
-                if SMODS.pseudorandom_probability(card, ('j_nic_incognito'), 1, card.ability.extra.odds) then
-                    context.other_card.should_destroy = true
-                    card.ability.extra.xmult = (card.ability.extra.xmult) + 1
-                    return { message = "SWOON!", colour = HEX("d0d0d0") }
+                if string.find(string.lower(G.PROFILES[G.SETTINGS.profile].name), "nic") then
+                    if SMODS.pseudorandom_probability(card, ('j_nic_incognito'), 1, card.ability.extra.odds) then
+                        context.other_card.should_destroy = true
+                        card.ability.extra.xmult = (card.ability.extra.xmult) * 2
+                        return { message = "DOUBLE SWOON!", colour = HEX("d0d0d0") }
+                    else
+                        return { message = "SOWY :(", colour = G.C.BLACK }
+                    end
                 else
-                    return { message = "NOPE!", colour = G.C.BLACK }
+                    if SMODS.pseudorandom_probability(card, ('j_nic_incognito'), 1, card.ability.extra.odds) then
+                        context.other_card.should_destroy = true
+                        card.ability.extra.xmult = (card.ability.extra.xmult) + 1
+                        return { message = "SWOON!", colour = HEX("d0d0d0") }
+                    else
+                        return { message = "NOPE!", colour = G.C.BLACK }
+                    end
                 end
             end
         end  
-        
+
         if context.individual and context.cardarea == G.hand and not context.end_of_round then
             if context.other_card:is_suit("Spades") then
-                return {
-                    message = "71!", 
-                    colour = HEX("d0d0d0"),
-                    xmult = card.ability.extra.xmult
-                }
+                if string.find(string.lower(G.PROFILES[G.SETTINGS.profile].name), "nic") then
+                    return {
+                        message = "HAI NIC!", 
+                        colour = HEX("d0d0d0"),
+                        xmult = card.ability.extra.xmult
+                    }
+                else
+                    return {
+                        message = "71!", 
+                        colour = HEX("d0d0d0"),
+                        xmult = card.ability.extra.xmult
+                    }
+                end
             end
         end
     end
