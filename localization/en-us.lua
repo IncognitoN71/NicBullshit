@@ -87,7 +87,7 @@ return {
                     "turns {C:dark_edition}Negative{} and increases",
                     "{C:attention}Stalgamite{} {C:mult}Mult{} and {C:chips}Chips{} by",
                     "{C:mult}+25{} Mult and {C:chips}+25{} Chips"},
-                    {"{C:mult}+#2#{} Mult and {C:chips}+#1#{} Chips",
+                    {"{C:mult}+#1#{} Mult and {C:chips}+#2#{} Chips",
                     "for each {C:attention}Stone card{} held in hand",
                     "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)",
                     "{C:inactive}(Currently {C:chips}+#4#{C:inactive} Chips)"},
@@ -107,14 +107,27 @@ return {
                     "hand give {X:mult,C:white}X3{} Mult"},
                 }
             },
+            j_nic_pear = {
+                name = "Pear",
+                text = {
+                    {"If played hand is a {C:attention}Pair{},",
+                    "upgrades {C:attention}Pair{} by {C:attention}#1# level{}"},
+                    {"{C:attention}Pear{} is destroyed",
+                    "after triggering {C:attention}10{} times",
+                    "{C:inactive}(#2# remaining)"},
+                }
+            },
             j_nic_pearto = {
                 name = "Pearto",
                 text = {
-                    "If played hand is a {C:attention}Pair{},",
-                    "upgrades {C:attention}Pair{} by {C:attention}#1# levels{}.",
-                    "{C:attention}Pearto{} is destroyed",
-                    "after triggering {C:attention}5{} times",
-                    "{C:inactive}(#2# remaining)",
+                    {"If played hand is a {C:attention}Pair{},",
+                    "upgrades {C:attention}Pair{} by {C:attention}#1# levels{}"},
+                    {"For every played {C:attention}Pair{},",
+                    "gains {C:mult}+10{} Mult",
+                    "For every {C:attention}level{} of {C:attention}Pair{},",
+                    "gains {C:chips}+50{} Chips",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)"},
                 }
             }
         },

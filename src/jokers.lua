@@ -191,7 +191,7 @@ SMODS.Joker{ -- Stalagmite
     rarity = 3,
     cost = 8,
     pos = {x = 3, y = 1},
-    config = { extra = { chips = 50, mult = 50, extra = 2 } },
+    config = { extra = { mult = 50, chips = 50, extra = 2 } },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
@@ -204,7 +204,7 @@ SMODS.Joker{ -- Stalagmite
                 end
             end
         end
-        return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.chips * stone_tally, card.ability.extra.mult * stone_tally, card.ability.extra } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.mult * stone_tally, card.ability.extra.chips * stone_tally, card.ability.extra } }
     end,
 
     calculate = function(self, card, context)
@@ -242,8 +242,8 @@ SMODS.Joker{ -- Stalagmite
                 if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
             end
             return {
-                chips = card.ability.extra.chips * stone_tally,
-                mult = card.ability.extra.mult * stone_tally
+                mult = card.ability.extra.mult * stone_tally,
+                chips = card.ability.extra.chips * stone_tally
             }
         end
     end
@@ -428,8 +428,8 @@ SMODS.Joker{ -- Ambassador Teto
     end
 }
 
-SMODS.Joker{ -- Pearto
-    key = "pearto",
+SMODS.Joker{ -- Pear
+    key = "pear",
     blueprint_compat = true,
     eternal_compat = false,
     unlocked = true,
@@ -438,16 +438,20 @@ SMODS.Joker{ -- Pearto
     rarity = "nic_teto",
     cost = 6,
     pos = {x = 4, y = 2},
-    config = { extra = { levels = 3, pearto = 5, pearto_loss = 1 } },
+    config = { extra = { levels = 1, pear = 10, pear_loss = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.levels, card.ability.extra.pearto, card.ability.extra.pearto_loss} }
+        return { vars = { card.ability.extra.levels, card.ability.extra.pear, card.ability.extra.pear_loss} }
+    end,
+
+    in_pool = function(self, args)
+        return not G.GAME.pool_flags.nic_pear_gone
     end,
 
     calculate = function(self, card, context)
         if context.after and context.main_eval and not context.blueprint and context.scoring_name == "Pair" then
-            if card.ability.extra.pearto - card.ability.extra.pearto_loss <= 0 then
+            if card.ability.extra.pear - card.ability.extra.pear_loss <= 0 then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         play_sound('tarot1')
@@ -467,20 +471,62 @@ SMODS.Joker{ -- Pearto
                         return true
                     end
                 }))
+                G.GAME.pool_flags.nic_pear_gone = true
                 return {
                     message = "TETO GONE :(",
                     colour = G.C.RED
                 }
             else
-                card.ability.extra.pearto = card.ability.extra.pearto - card.ability.extra.pearto_loss
+                card.ability.extra.pear = card.ability.extra.pear - card.ability.extra.pear_loss
             end
         end
 
         if context.before and context.main_eval and context.scoring_name == "Pair" then
             return {
-                level_up = 3, level_up_hand = "Pair", 
+                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
                 message = "TETO PEAR!", 
                 colour = G.C.RED
+            }
+        end
+    end
+}
+
+SMODS.Joker{ -- Pearto
+    key = "pearto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = "nic_teto",
+    cost = 6,
+    pos = {x = 5, y = 2},
+    config = { extra = { levels = 2, mult = 0, chips = 0 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels, card.ability.extra.mult, card.ability.extra.chips } }
+    end,
+
+    in_pool = function(self, args)
+        return G.GAME.pool_flags.nic_pear_gone
+    end,
+
+    calculate = function(self, card, context)
+        if context.before and context.main_eval and context.scoring_name == "Pair" then
+            return {
+                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
+                message = "TETO PEAR!", 
+                colour = G.C.RED
+            }
+        end
+
+        if context.joker_main then
+            card.ability.extra.mult = G.GAME.hands["Pair"].played * 10
+            card.ability.extra.chips = G.GAME.hands["Pair"].level * 50
+            return {
+                mult = card.ability.extra.mult,
+                chips = card.ability.extra.chips
             }
         end
     end
