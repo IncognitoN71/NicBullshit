@@ -106,6 +106,16 @@ return {
                     "All {C:attention}2{} of {C:hearts}Hearts{} held in",
                     "hand give {X:mult,C:white}X3{} Mult"},
                 }
+            },
+            j_nic_pearto = {
+                name = "Pearto...?",
+                text = {
+                    "If played hand is a {C:attention}Pair{},",
+                    "upgrades {C:attention}Pair{} by {C:attention}#1# levels{}.",
+                    "{C:attention}Pearto{} is destroyed",
+                    "after triggering {C:attention}5{} times",
+                    "{C:inactive}(#2# remaining)",
+                }
             }
         },
         Other={},

@@ -9,7 +9,7 @@ SMODS.Joker{ -- Button
     atlas = 'nicjokers',
     rarity = 1,
     cost = 3,
-    pos = {x = 2, y = 1},
+    pos = {x = 2, y = 0 },
     config = { extra = { xmult = 0.05, odds = 100, chance = 1} },
 
     loc_vars = function(self, info_queue, card)
@@ -54,7 +54,7 @@ SMODS.Joker{ -- Sly Cooper
     atlas = 'nicjokers',
     rarity = 2,
     cost = 6,
-    pos = {x = 3, y = 1},
+    pos = {x = 3, y = 0},
     config = { extra = { oldshopsize = 3, slycooper_remaining = 1, odds = 4 } },
 
     loc_vars = function(self, info_queue, card)
@@ -80,12 +80,14 @@ SMODS.Joker{ -- Sly Cooper
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-            card.ability.extra.slycooper_remaining = 0
+            local eval = function(card) return card.ability.extra.slycooper_remaining == 0 and not card.REMOVED end
+            juice_card_until(card, eval, true)
+            card.ability.extra.slycooper_remaining = card.ability.extra.slycooper_remaining - 1
             return { message = "ACTIVE!", colour = G.C.RED }
         end
         if card.ability.extra.slycooper_remaining == 0 then
             if (context.buying_card or context.nic_buying_booster or context.nic_buying_voucher) and context.card.cost > 0 then
-                card.ability.extra.slycooper_remaining = 1
+                card.ability.extra.slycooper_remaining = card.ability.extra.slycooper_remaining + 1
                 if SMODS.pseudorandom_probability(card, ('j_nic_slycooper'), 1, card.ability.extra.odds) then
                     context.card.cost = context.card.cost * 2
                     SMODS.calculate_effect({
@@ -105,6 +107,7 @@ SMODS.Joker{ -- Sly Cooper
     end
 }
 
+
 -- Rare
 
 SMODS.Joker{ -- Technoblade
@@ -116,7 +119,7 @@ SMODS.Joker{ -- Technoblade
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
-    pos = {x = 2, y = 0},
+    pos = {x = 2, y = 1},
     config = { extra = { mult = 0, chips = 0, scoreReq = 50 } },
 
     loc_vars = function(self, info_queue, card)
@@ -187,7 +190,7 @@ SMODS.Joker{ -- Stalagmite
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
-    pos = {x = 4, y = 1},
+    pos = {x = 3, y = 1},
     config = { extra = { chips = 50, mult = 50, extra = 2 } },
 
     loc_vars = function(self, info_queue, card)
@@ -255,7 +258,7 @@ SMODS.Joker{ -- Machinedramon
     atlas = 'nicjokers',
     rarity = 3,
     cost = 8,
-    pos = {x = 4, y = 0},
+    pos = {x = 4, y = 1},
     config = { extra = { mult = 0, xmult = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -310,9 +313,8 @@ SMODS.Joker{ -- Machinedramon
     rarity = 3,
     cost = 10,
     pos = {x = 3, y = 0},
-    config = { extra = { repetitions = 9 } },
 
-     add_to_deck = function(self, card, from_debuff)
+    add_to_deck = function(self, card, from_debuff)
         SMODS.change_free_rerolls(2)
     end,
     remove_from_deck = function(self, card, from_debuff)
@@ -336,8 +338,8 @@ SMODS.Joker{ -- Kasane Jokto
     discovered = true,
     atlas = 'nicjokers',
     rarity = "nic_teto",
-    cost = 5,
-    pos = {x = 3, y = 0},
+    cost = 6,
+    pos = {x = 2, y = 2},
     config = { extra = { repetitions = 9 } },
 
     loc_vars = function(self, info_queue, card)
@@ -365,8 +367,8 @@ SMODS.Joker{ -- Ambassador Teto
     discovered = true,
     atlas = 'nicjokers',
     rarity = "nic_teto",
-    cost = 5,
-    pos = {x = 2, y = 2},
+    cost = 6,
+    pos = {x = 3, y = 2},
     config = { extra = { xmult = 1.5 } },
 
     loc_vars = function(self, info_queue, card)
@@ -422,6 +424,63 @@ SMODS.Joker{ -- Ambassador Teto
                     }
                 end
             end
+        end
+    end
+}
+
+SMODS.Joker{ -- Pearto
+    key = "pearto",
+    blueprint_compat = true,
+    eternal_compat = false,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = "nic_teto",
+    cost = 6,
+    pos = {x = 4, y = 2},
+    config = { extra = { levels = 3, pearto = 5, pearto_loss = 1 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels, card.ability.extra.pearto, card.ability.extra.pearto_loss} }
+    end,
+
+    calculate = function(self, card, context)
+        if context.after and context.main_eval and not context.blueprint and context.scoring_name == "Pair" then
+            if card.ability.extra.pearto - card.ability.extra.pearto_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                return {
+                    message = "TETO GONE :(",
+                    colour = G.C.RED
+                }
+            else
+                card.ability.extra.pearto = card.ability.extra.pearto - card.ability.extra.pearto_loss
+            end
+        end
+
+        if context.before and context.main_eval and context.scoring_name == "Pair" then
+            return {
+                level_up = 3, level_up_hand = "Pair", 
+                message = "TETO PEAR!", 
+                colour = G.C.RED
+            }
         end
     end
 }

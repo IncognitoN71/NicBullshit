@@ -43,5 +43,6 @@ SMODS.ObjectType{
     cards = {
         ['j_nic_kasanejokto'] = true,
         ['j_nic_ambassadorteto'] = true,
+        ['j_nic_pearto'] = true,
     },
 }
