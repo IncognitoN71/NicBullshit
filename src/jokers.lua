@@ -439,6 +439,7 @@ SMODS.Joker{ -- Pearto
     cost = 6,
     pos = {x = 4, y = 2},
     config = { extra = { levels = 3, pearto = 5, pearto_loss = 1 } },
+    pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels, card.ability.extra.pearto, card.ability.extra.pearto_loss} }

@@ -108,7 +108,7 @@ return {
                 }
             },
             j_nic_pearto = {
-                name = "Pearto...?",
+                name = "Pearto",
                 text = {
                     "If played hand is a {C:attention}Pair{},",
                     "upgrades {C:attention}Pair{} by {C:attention}#1# levels{}.",
