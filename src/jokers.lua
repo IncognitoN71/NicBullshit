@@ -84,6 +84,9 @@ SMODS.Joker{ -- Sly Cooper
             card.ability.extra.slycooper_remaining = card.ability.extra.slycooper_remaining - 1
             return { message = "ACTIVE!", colour = G.C.RED }
         end
+        if context.starting_shop then
+            return { play_sound('nic_gambling') }
+        end
         if card.ability.extra.slycooper_remaining == 0 then
             if (context.buying_card or context.nic_buying_booster or context.nic_buying_voucher) and context.card.cost > 0 then
                 card.ability.extra.slycooper_remaining = card.ability.extra.slycooper_remaining + 1

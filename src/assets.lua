@@ -66,6 +66,11 @@ SMODS.Sound{ -- Explosion
     path = "explosion.ogg",
 }
 
+SMODS.Sound{ -- Gambling
+    key = "gambling",
+    path = "gambling.ogg",
+}
+
 SMODS.Sound{ -- Machinedramon
     key = "machinedramon",
     path = "machinedramon.ogg",
