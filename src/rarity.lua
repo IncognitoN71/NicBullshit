@@ -6,10 +6,3 @@ SMODS.Rarity{
         return weight
     end,
 }
-
-SMODS.Rarity {
-    key = "teto",
-    pools = { ["Joker"] = true },
-    default_weight = 0.02,
-    badge_colour = HEX('e15d73'), -- c73d54
-}
