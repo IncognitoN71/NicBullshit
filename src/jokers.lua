@@ -70,7 +70,6 @@ SMODS.Joker{ -- Sly Cooper
         G.GAME.shop.joker_max = G.GAME.shop.joker_max + 1
         if G.shop then
             G.shop:recalculate()
-            G.shop_jokers.T.w = 3.2*G.CARD_W
         end
     end,
 
@@ -418,7 +417,7 @@ SMODS.Joker{ -- Pear
                 }))
                 G.GAME.pool_flags.nic_pear_gone = true
                 return {
-                    message = "TETO GONE :(",
+                    message = "NOM :(",
                     colour = G.C.RED
                 }
             else
@@ -469,10 +468,9 @@ SMODS.Joker{ -- Pearto
                 colour = G.C.RED
             }
         end
-
         if context.joker_main then
             card.ability.extra.mult = G.GAME.hands["Pair"].played * 10
-            card.ability.extra.chips = G.GAME.hands["Pair"].level * 50
+            card.ability.extra.chips = to_number(G.GAME.hands["Pair"].level) * 50
             return {
                 mult = card.ability.extra.mult,
                 chips = card.ability.extra.chips
