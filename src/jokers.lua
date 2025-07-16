@@ -352,7 +352,7 @@ SMODS.Joker{ -- Kasane Jokto
     end,
 
     set_badges = function(self, card, badges)
-        badges[#badges+1] = create_badge('TETO', HEX('e15d73'), G.C.WHITE, 1)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
     end,
 
     calculate = function(self, card, context)
@@ -368,6 +368,79 @@ SMODS.Joker{ -- Kasane Jokto
     end
 }
 
+SMODS.Joker{ -- Ambassador Teto
+    key = "ambassadorteto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 7,
+    pos = {x = 3, y = 2},
+    config = { extra = { xmult = 1.5 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    calculate = function(self, card, context)        
+        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
+            if context.other_card:is_suit("Clubs") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Diamonds')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Diamonds") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Spades')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Spades") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Hearts')
+                        return true
+                    end
+                }))
+            end
+            if not context.other_card:is_suit("Hearts") then
+                return { message = "BLOOD!", colour = G.C.RED }
+            end
+        end
+
+        if context.individual and context.cardarea == G.hand and not context.end_of_round then
+            if context.other_card:is_suit("Hearts") then
+                if context.other_card:get_id() == 2 then
+                    return {
+                        xmult = card.ability.extra.xmult + 1.5
+                    }
+                else
+                    return {
+                        xmult = card.ability.extra.xmult
+                    }
+                end
+            end
+        end
+    end
+}
+
 SMODS.Joker{ -- Pear
     key = "pear",
     blueprint_compat = true,
@@ -375,10 +448,10 @@ SMODS.Joker{ -- Pear
     unlocked = true,
     discovered = true,
     atlas = 'nicjokers',
-    rarity = 2,
+    rarity = 1,
     cost = 6,
     pos = {x = 4, y = 2},
-    config = { extra = { levels = 1, pear = 10, pear_loss = 1 } },
+    config = { extra = { levels = 2, pear = 5, pear_loss = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -386,11 +459,7 @@ SMODS.Joker{ -- Pear
     end,
 
     set_badges = function(self, card, badges)
-        badges[#badges+1] = create_badge('TETO', HEX('e15d73'), G.C.WHITE, 1)
-    end,
-
-    in_pool = function(self, args)
-        return not G.GAME.pool_flags.nic_pear_gone
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
     end,
 
     calculate = function(self, card, context)
@@ -445,7 +514,7 @@ SMODS.Joker{ -- Pearto
     rarity = 2,
     cost = 7,
     pos = {x = 5, y = 2},
-    config = { extra = { levels = 2, mult = 0, chips = 0 } },
+    config = { extra = { levels = 3, mult = 0, chips = 0 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -453,7 +522,7 @@ SMODS.Joker{ -- Pearto
     end,
 
     set_badges = function(self, card, badges)
-        badges[#badges+1] = create_badge('TETO', HEX('e15d73'), G.C.WHITE, 1)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
     end,
 
     in_pool = function(self, args)
@@ -475,79 +544,6 @@ SMODS.Joker{ -- Pearto
                 mult = card.ability.extra.mult,
                 chips = card.ability.extra.chips
             }
-        end
-    end
-}
-
-SMODS.Joker{ -- Ambassador Teto
-    key = "ambassadorteto",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 3,
-    cost = 7,
-    pos = {x = 3, y = 2},
-    config = { extra = { xmult = 1.5 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult } }
-    end,
-
-    set_badges = function(self, card, badges)
-        badges[#badges+1] = create_badge('TETO', HEX('e15d73'), G.C.WHITE, 1)
-    end,
-
-    calculate = function(self, card, context)        
-        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
-            if context.other_card:is_suit("Clubs") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Diamonds')
-                        return true
-                    end
-                }))
-            end
-            if context.other_card:is_suit("Diamonds") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Spades')
-                        return true
-                    end
-                }))
-            end
-            if context.other_card:is_suit("Spades") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Hearts')
-                        return true
-                    end
-                }))
-            end
-            if not context.other_card:is_suit("Hearts") then
-                return { message = "BLOOD!", colour = G.C.RED }
-            end
-        end
-
-        if context.individual and context.cardarea == G.hand and not context.end_of_round then
-            if context.other_card:is_suit("Hearts") then
-                if context.other_card:get_id() == 2 then
-                    return {
-                        xmult = card.ability.extra.xmult + 1.5
-                    }
-                else
-                    return {
-                        xmult = card.ability.extra.xmult
-                    }
-                end
-            end
         end
     end
 }

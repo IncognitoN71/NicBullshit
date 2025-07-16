@@ -113,7 +113,7 @@ return {
                     {"If played hand is a {C:attention}Pair{},",
                     "upgrades {C:attention}Pair{} by {C:attention}#1# level{}"},
                     {"{C:attention}Pear{} is destroyed",
-                    "after triggering {C:attention}10{} times",
+                    "after triggering {C:attention}5{} times",
                     "{C:inactive}(#2# remaining)"},
                 }
             },
