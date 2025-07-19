@@ -25,6 +25,7 @@ return {
                 text = {
                     "{X:mult,C:white} X#1#{} Mult, loses {X:mult,C:white} X#2#{} Mult",
                     "per {C:attention}unscored card{}",
+                    "{C:inactive}(Gains $50 When 0 XMult)",
                 }
             },
             j_nic_dalgonatriangle = { -- Common
@@ -32,6 +33,7 @@ return {
                 text = {
                     "{X:chips,C:white} X#1#{} Chips, loses {X:chips,C:white} X#2#{} Chips",
                     "per {C:attention}unscored card{}",
+                    "{C:inactive}(Gains $50 When 0 XChips)",
                 }
             },
             j_nic_dalgonastar = { -- Common
@@ -40,6 +42,7 @@ return {
                     "{X:money,C:white} $X#1#{} current cash at the",
                     "end of round, loses {X:money,C:white} $#2#{}",
                     "per {C:attention}scored card{}",
+                    "{C:inactive}(Gains $50 When 0 Cash)",
                 }
             },
             j_nic_dalgonaumbrella = { -- Common
@@ -47,6 +50,7 @@ return {
                 text = {
                     "{X:dark_edition,C:white} ^^#1#{} Mult, loses {X:dark_edition,C:white} ^^#2#{} Mult",
                     "per {C:attention}played card{}",
+                    "{C:inactive}(Gains $50 When 0 ^^Mult)",
                 }
             },
             j_nic_button = { -- Common
@@ -199,7 +203,7 @@ return {
             dalgonawarning = {
                 name = "Dalgona Warning",
                 text = {
-                    "{C:red}If sold{},",
+                    "{C:red}If Destroyed or Sold{},",
                     "sets money to {C:money}$0",
                 }
             },

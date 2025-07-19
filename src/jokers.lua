@@ -51,7 +51,7 @@ SMODS.Joker{ -- Dalgona Circle
     rarity = "nic_dalgona",
     cost = 0,
     pos = {x = 3, y = 2},
-    config = { extra = { xmult = 2, xmult_loss = 0.01 } },
+    config = { extra = { xmult = 0.01, xmult_loss = 0.01, counter = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -60,15 +60,16 @@ SMODS.Joker{ -- Dalgona Circle
     end,
 
     remove_from_deck = function(self, card, from_debuff)
-		ease_dollars(-G.GAME.dollars, true)
+		ease_dollars((-G.GAME.dollars * card.ability.extra.counter) + (50 + (-50 * card.ability.extra.counter)), true)
 	end,
 
     calculate = function(self, card, context)
         if context.individual and context.cardarea == "unscored" and not context.blueprint then
             if card.ability.extra.xmult - card.ability.extra.xmult_loss <= 0 then
+                card.ability.extra.counter = 0
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        play_sound('tarot1')
+                        play_sound('nic_win')
                         card.T.r = -0.2
                         card:juice_up(0.3, 0.4)
                         card.states.drag.is = true
@@ -85,10 +86,6 @@ SMODS.Joker{ -- Dalgona Circle
                         return true
                     end
                 }))
-                return {
-                    message = "SUCCESS!",
-                    colour = G.C.GREEN
-                }
             else
                 card.ability.extra.xmult = card.ability.extra.xmult - card.ability.extra.xmult_loss
                 return {
@@ -100,7 +97,7 @@ SMODS.Joker{ -- Dalgona Circle
 
         if context.joker_main then
             return {
-                xchips = card.ability.extra.xmult
+                xmult = card.ability.extra.xmult
             }
         end
     end
@@ -117,7 +114,7 @@ SMODS.Joker{ -- Dalgona Triangle
     rarity = "nic_dalgona",
     cost = 0,
     pos = {x = 4, y = 2},
-    config = { extra = { xchips = 2, xchips_loss = 0.01 } },
+    config = { extra = { xchips = 2, xchips_loss = 0.01, counter = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -126,15 +123,16 @@ SMODS.Joker{ -- Dalgona Triangle
     end,
 
     remove_from_deck = function(self, card, from_debuff)
-		ease_dollars(-G.GAME.dollars, true)
+		ease_dollars((-G.GAME.dollars * card.ability.extra.counter) + (50 + (-50 * card.ability.extra.counter)), true)
 	end,
 
     calculate = function(self, card, context)
         if context.individual and context.cardarea == "unscored" and not context.blueprint then
             if card.ability.extra.xchips - card.ability.extra.xchips_loss <= 0 then
+                card.ability.extra.counter = 0
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        play_sound('tarot1')
+                        play_sound('nic_win')
                         card.T.r = -0.2
                         card:juice_up(0.3, 0.4)
                         card.states.drag.is = true
@@ -151,10 +149,6 @@ SMODS.Joker{ -- Dalgona Triangle
                         return true
                     end
                 }))
-                return {
-                    message = "SUCCESS!",
-                    colour = G.C.GREEN
-                }
             else
                 card.ability.extra.xchips = card.ability.extra.xchips - card.ability.extra.xchips_loss
                 return {
@@ -183,7 +177,7 @@ SMODS.Joker{ -- Dalgona Star
     rarity = "nic_dalgona",
     cost = 0,
     pos = {x = 5, y = 2},
-    config = { extra = { dollars = 2, dollars_loss = 0.01 } },
+    config = { extra = { dollars = 2, dollars_loss = 0.01, counter = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -192,15 +186,16 @@ SMODS.Joker{ -- Dalgona Star
     end,
 
     remove_from_deck = function(self, card, from_debuff)
-		ease_dollars(-G.GAME.dollars, true)
+		ease_dollars((-G.GAME.dollars * card.ability.extra.counter) + (50 + (-50 * card.ability.extra.counter)), true)
 	end,
 
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and not context.blueprint then
             if card.ability.extra.dollars - card.ability.extra.dollars_loss <= 0 then
+                card.ability.extra.counter = 0
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        play_sound('tarot1')
+                        play_sound('nic_win')
                         card.T.r = -0.2
                         card:juice_up(0.3, 0.4)
                         card.states.drag.is = true
@@ -217,10 +212,6 @@ SMODS.Joker{ -- Dalgona Star
                         return true
                     end
                 }))
-                return {
-                    message = "SUCCESS!",
-                    colour = G.C.GREEN
-                }
             else
                 card.ability.extra.dollars = card.ability.extra.dollars - card.ability.extra.dollars_loss
                 return {
@@ -246,7 +237,7 @@ SMODS.Joker{ -- Dalgona Umbrella
     rarity = "nic_dalgona",
     cost = 0,
     pos = {x = 6, y = 2},
-    config = { extra = { powmult = 2, powmult_loss = 0.05 } },
+    config = { extra = { powmult = 2, powmult_loss = 0.05, counter = 1 } },
     pools = { Food = true },
 
     loc_vars = function(self, info_queue, card)
@@ -255,15 +246,16 @@ SMODS.Joker{ -- Dalgona Umbrella
     end,
 
     remove_from_deck = function(self, card, from_debuff)
-		ease_dollars(-G.GAME.dollars, true)
+        ease_dollars((-G.GAME.dollars * card.ability.extra.counter) + (50 + (-50 * card.ability.extra.counter)), true)
 	end,
 
     calculate = function(self, card, context)
         if context.individual and (context.cardarea == G.play or context.cardarea == "unscored") and not context.blueprint then
             if card.ability.extra.powmult - card.ability.extra.powmult_loss <= 0 then
+                card.ability.extra.counter = 0
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        play_sound('tarot1')
+                        play_sound('nic_win')
                         card.T.r = -0.2
                         card:juice_up(0.3, 0.4)
                         card.states.drag.is = true
@@ -280,10 +272,6 @@ SMODS.Joker{ -- Dalgona Umbrella
                         return true
                     end
                 }))
-                return {
-                    message = "SUCCESS!",
-                    colour = G.C.GREEN
-                }
             else
                 card.ability.extra.powmult = card.ability.extra.powmult - card.ability.extra.powmult_loss
                 return {

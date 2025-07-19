@@ -102,3 +102,8 @@ SMODS.Sound{ -- Teto Oh My God My Penis
     key = "tetoohmygodmypenis",
     path = "tetoohmygodmypenis.ogg",
 }
+
+SMODS.Sound{ -- Win
+    key = "win",
+    path = "win.ogg",
+}
