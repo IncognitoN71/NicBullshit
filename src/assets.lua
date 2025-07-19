@@ -5,6 +5,13 @@ SMODS.Atlas{ -- Jokers
     py = 95,
 }
 
+SMODS.Atlas{ -- POTOFGREEDJOKE
+    key = "potofgreedjoke",
+    path = "potofgreedjoke.png",
+    px = 71,
+    py = 95,
+}
+
 SMODS.Atlas{ -- Blinds
     key = "nicblinds",
     path = "nicblinds.png",
@@ -79,6 +86,11 @@ SMODS.Sound{ -- Machinedramon
 SMODS.Sound{ -- Metal Gear Solid Alert
     key = "metalalert",
     path = "metalalert.ogg",
+}
+
+SMODS.Sound{ -- Neigh
+    key = "neigh",
+    path = "neigh.ogg",
 }
 
 SMODS.Sound{ -- Technoblade Never Dies

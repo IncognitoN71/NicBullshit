@@ -1,5 +1,314 @@
 -- Common
 
+SMODS.Joker{ -- Dalgona Cookie
+    key = "dalgonacookie",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 1,
+    cost = 4,
+    pos = {x = 2, y = 2},
+    config = { extra = {} },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, center)
+		return { vars = {} }
+	end,
+    
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('tarot2', 1.1, 0.6)
+                    card:juice_up()
+                    card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.Dalgona, 'dalgona').key)
+                    return true
+                end
+            }))
+        end
+    end
+}
+
+SMODS.ObjectType{ -- Pool Dalgona
+	key = "Dalgona",
+	cards = {
+        ['j_nic_dalgonacircle'] = true,
+        ['j_nic_dalgonatriangle'] = true,
+        ['j_nic_dalgonastar'] = true,
+        ['j_nic_dalgonaumbrella'] = true,
+    }
+}
+
+SMODS.Joker{ -- Dalgona Circle
+    key = "dalgonacircle",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = "nic_dalgona",
+    cost = 0,
+    pos = {x = 3, y = 2},
+    config = { extra = { xmult = 2, xmult_loss = 0.01 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "dalgonawarning", set = "Other" }
+        return { vars = { card.ability.extra.xmult, card.ability.extra.xmult_loss } }
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+		ease_dollars(-G.GAME.dollars, true)
+	end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == "unscored" and not context.blueprint then
+            if card.ability.extra.xmult - card.ability.extra.xmult_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                return {
+                    message = "SUCCESS!",
+                    colour = G.C.GREEN
+                }
+            else
+                card.ability.extra.xmult = card.ability.extra.xmult - card.ability.extra.xmult_loss
+                return {
+                    message = "-X0.01",
+                    colour = G.C.MULT
+                }
+            end
+        end
+
+        if context.joker_main then
+            return {
+                xchips = card.ability.extra.xmult
+            }
+        end
+    end
+}
+
+
+SMODS.Joker{ -- Dalgona Triangle
+    key = "dalgonatriangle",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = "nic_dalgona",
+    cost = 0,
+    pos = {x = 4, y = 2},
+    config = { extra = { xchips = 2, xchips_loss = 0.01 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "dalgonawarning", set = "Other" }
+        return { vars = { card.ability.extra.xchips, card.ability.extra.xchips_loss } }
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+		ease_dollars(-G.GAME.dollars, true)
+	end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == "unscored" and not context.blueprint then
+            if card.ability.extra.xchips - card.ability.extra.xchips_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                return {
+                    message = "SUCCESS!",
+                    colour = G.C.GREEN
+                }
+            else
+                card.ability.extra.xchips = card.ability.extra.xchips - card.ability.extra.xchips_loss
+                return {
+                    message = "-X0.01",
+                    colour = G.C.CHIPS
+                }
+            end
+        end
+
+        if context.joker_main then
+            return {
+                xchips = card.ability.extra.xchips
+            }
+        end
+    end
+}
+
+
+SMODS.Joker{ -- Dalgona Star
+    key = "dalgonastar",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = "nic_dalgona",
+    cost = 0,
+    pos = {x = 5, y = 2},
+    config = { extra = { dollars = 2, dollars_loss = 0.01 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "dalgonawarning", set = "Other" }
+        return { vars = { card.ability.extra.dollars, card.ability.extra.dollars_loss } }
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+		ease_dollars(-G.GAME.dollars, true)
+	end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and not context.blueprint then
+            if card.ability.extra.dollars - card.ability.extra.dollars_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                return {
+                    message = "SUCCESS!",
+                    colour = G.C.GREEN
+                }
+            else
+                card.ability.extra.dollars = card.ability.extra.dollars - card.ability.extra.dollars_loss
+                return {
+                    message = "-$X0.01",
+                    colour = G.C.MONEY
+                }
+            end
+        end
+
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            ease_dollars(-G.GAME.dollars + (G.GAME.dollars * card.ability.extra.dollars), true)
+        end
+    end
+}
+
+SMODS.Joker{ -- Dalgona Umbrella
+    key = "dalgonaumbrella",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = "nic_dalgona",
+    cost = 0,
+    pos = {x = 6, y = 2},
+    config = { extra = { powmult = 2, powmult_loss = 0.05 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "dalgonawarning", set = "Other" }
+        return { vars = { card.ability.extra.powmult, card.ability.extra.powmult_loss } }
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+		ease_dollars(-G.GAME.dollars, true)
+	end,
+
+    calculate = function(self, card, context)
+        if context.individual and (context.cardarea == G.play or context.cardarea == "unscored") and not context.blueprint then
+            if card.ability.extra.powmult - card.ability.extra.powmult_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                return {
+                    message = "SUCCESS!",
+                    colour = G.C.GREEN
+                }
+            else
+                card.ability.extra.powmult = card.ability.extra.powmult - card.ability.extra.powmult_loss
+                return {
+                    message = "-^^0.05",
+                    colour = G.C.DARK_EDITION
+                }
+            end
+        end
+
+        if context.joker_main then
+            if Talisman then
+                return {
+                    eemult = card.ability.extra.powmult
+                }
+            else
+                return {
+                    Xmult_mod = mult ^ (mult ^ (card.ability.extra.powmult - 1)),
+                    message = "^^"..card.ability.extra.powmult.." Mult",
+                    colour = G.C.DARK_EDITION
+                }
+            end
+        end
+    end
+}
+
 SMODS.Joker{ -- Button
     key = "button",
     blueprint_compat = true,
@@ -61,8 +370,9 @@ SMODS.Joker{ -- Sly Cooper
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
         return { vars = { 
             new_numerator, new_denominator,
-            localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_slycooper_active' or 'nic_slycooper_inactive'), vars = { card.ability.extra.slycooper_remaining } }, 
-            card.ability.extra.oldshopsize } 
+            localize { type = 'variable', key = (card.ability.extra.slycooper_remaining == 0 and 'nic_active' or 'nic_inactive'), vars = { card.ability.extra.slycooper_remaining } }, 
+            card.ability.extra.oldshopsize 
+        } 
         }
     end,
 
@@ -109,7 +419,6 @@ SMODS.Joker{ -- Sly Cooper
         end
     end
 }
-
 
 -- Rare
 
@@ -219,7 +528,7 @@ SMODS.Joker{ -- Stalagmite
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         other_card:juice_up()
-                        other_card:set_edition('e_negative')
+                        other_card:set_edition('e_negative', nil, true)
                         play_sound("nic_dripstone")
                         return true
                     end
@@ -240,6 +549,8 @@ SMODS.Joker{ -- Stalagmite
         end
 
         if context.joker_main then
+            local eval = function(card) return G.GAME.current_round.hands_left == 1 and not card.REMOVED end
+            juice_card_until(card, eval, true)
             local stone_tally = 0
             for k, v in ipairs(G.hand.cards) do
                 if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
@@ -304,6 +615,8 @@ SMODS.Joker{ -- Machinedramon
         end
 
         if context.joker_main then
+            local eval = function(card) return G.GAME.current_round.hands_left == 1 and not card.REMOVED end
+            juice_card_until(card, eval, true)
             return { 
                 mult = card.ability.extra.mult, 
                 xmult = card.ability.extra.xmult 
@@ -312,247 +625,40 @@ SMODS.Joker{ -- Machinedramon
 	end
 }
 
---[[SMODS.Joker{ -- Reroll Gimmick
-    key = "yup",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 3,
-    cost = 10,
-    pos = {x = 3, y = 0},
-
-    add_to_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(2)
-    end,
-    remove_from_deck = function(self, card, from_debuff)
-        SMODS.change_free_rerolls(-2)
-    end,
-
-    calculate = function(self, card, context)
-        if context.reroll_shop then
-            G.GAME.current_round.free_rerolls = 2
-        end
-    end
-}]]
-
--- Teto
-
-SMODS.Joker{ -- Kasane Jokto
-    key = "kasanejokto",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 2,
-    cost = 5,
-    pos = {x = 2, y = 2},
-    config = { extra = { repetitions = 9 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult } }
-    end,
-
-    set_badges = function(self, card, badges)
-        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
-    end,
-
-    calculate = function(self, card, context)
-        if context.cardarea == G.play and context.repetition and not context.repetition_only then
-            if context.other_card:get_id() == 2 then
-                return {
-                    message = localize('k_again_ex'),
-                    repetitions = card.ability.extra.repetitions,
-                    card = card
-                }
-            end
-        end
-    end
-}
-
-SMODS.Joker{ -- Ambassador Teto
-    key = "ambassadorteto",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 3,
-    cost = 7,
-    pos = {x = 3, y = 2},
-    config = { extra = { xmult = 1.5 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult } }
-    end,
-
-    set_badges = function(self, card, badges)
-        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
-    end,
-
-    calculate = function(self, card, context)        
-        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
-            if context.other_card:is_suit("Clubs") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Diamonds')
-                        return true
-                    end
-                }))
-            end
-            if context.other_card:is_suit("Diamonds") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Spades')
-                        return true
-                    end
-                }))
-            end
-            if context.other_card:is_suit("Spades") then
-                local other_card = context.other_card
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        other_card:juice_up()
-                        other_card:change_suit('Hearts')
-                        return true
-                    end
-                }))
-            end
-            if not context.other_card:is_suit("Hearts") then
-                return { message = "BLOOD!", colour = G.C.RED }
-            end
-        end
-
-        if context.individual and context.cardarea == G.hand and not context.end_of_round then
-            if context.other_card:is_suit("Hearts") then
-                if context.other_card:get_id() == 2 then
-                    return {
-                        xmult = card.ability.extra.xmult + 1.5
-                    }
-                else
-                    return {
-                        xmult = card.ability.extra.xmult
-                    }
-                end
-            end
-        end
-    end
-}
-
-SMODS.Joker{ -- Pear
-    key = "pear",
-    blueprint_compat = true,
-    eternal_compat = false,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 1,
-    cost = 6,
-    pos = {x = 4, y = 2},
-    config = { extra = { levels = 2, pear = 5, pear_loss = 1 } },
-    pools = { Food = true },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.levels, card.ability.extra.pear, card.ability.extra.pear_loss} }
-    end,
-
-    set_badges = function(self, card, badges)
-        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
-    end,
-
-    calculate = function(self, card, context)
-        if context.after and context.main_eval and not context.blueprint and context.scoring_name == "Pair" then
-            if card.ability.extra.pear - card.ability.extra.pear_loss <= 0 then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('tarot1')
-                        card.T.r = -0.2
-                        card:juice_up(0.3, 0.4)
-                        card.states.drag.is = true
-                        card.children.center.pinch.x = true
-                        G.E_MANAGER:add_event(Event({
-                            trigger = 'after',
-                            delay = 0.3,
-                            blockable = false,
-                            func = function()
-                                card:remove()
-                                return true
-                            end
-                        }))
-                        return true
-                    end
-                }))
-                G.GAME.pool_flags.nic_pear_gone = true
-                return {
-                    message = "NOM :(",
-                    colour = G.C.RED
-                }
-            else
-                card.ability.extra.pear = card.ability.extra.pear - card.ability.extra.pear_loss
-            end
-        end
-
-        if context.before and context.main_eval and context.scoring_name == "Pair" then
-            return {
-                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
-                message = "TETO PEAR!", 
-                colour = G.C.RED
-            }
-        end
-    end
-}
-
-SMODS.Joker{ -- Pearto
-    key = "pearto",
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    atlas = 'nicjokers',
-    rarity = 2,
-    cost = 7,
-    pos = {x = 5, y = 2},
-    config = { extra = { levels = 3, mult = 0, chips = 0 } },
-    pools = { Food = true },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.levels, card.ability.extra.mult, card.ability.extra.chips } }
-    end,
-
-    set_badges = function(self, card, badges)
-        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
-    end,
-
-    in_pool = function(self, args)
-        return G.GAME.pool_flags.nic_pear_gone
-    end,
-
-    calculate = function(self, card, context)
-        if context.before and context.main_eval and context.scoring_name == "Pair" then
-            return {
-                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
-                message = "TETO PEAR!", 
-                colour = G.C.RED
-            }
-        end
-        if context.joker_main then
-            card.ability.extra.mult = G.GAME.hands["Pair"].played * 10
-            card.ability.extra.chips = to_number(G.GAME.hands["Pair"].level) * 50
-            return {
-                mult = card.ability.extra.mult,
-                chips = card.ability.extra.chips
-            }
-        end
-    end
-}
-
 -- Legendary
+
+SMODS.Joker{ -- Cyan
+    key = "cyan",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 4,
+    cost = 20,
+    pos = {x = 0, y = 1},
+    soul_pos = {x = 1, y = 1},
+    config = { extra = { xchips = 1, counter = 1 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xchips } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.before and context.main_eval and not context.blueprint then 
+            card.ability.extra.counter = card.ability.extra.counter + 1
+            card:juice_up(0.5, 0.5)
+            return { play_sound("nic_neigh") }
+        end
+
+        if context.joker_main then
+            card.ability.extra.xchips = ((1/math.sqrt(5)) * (((1 + math.sqrt(5)) / 2)^(card.ability.extra.counter))) + ((-1/math.sqrt(5)) * (((1 - math.sqrt(5)) / 2)^(card.ability.extra.counter)))
+            return {
+                xchips = card.ability.extra.xchips
+            }
+        end
+    end
+}
 
 SMODS.Joker{ -- Incognito
     key = "incognito",
@@ -622,3 +728,328 @@ SMODS.Joker{ -- Incognito
         end
     end
 }
+
+-- Teto
+
+SMODS.Joker{ -- Kasane Jokto
+    key = "kasanejokto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 2,
+    cost = 5,
+    pos = {x = 2, y = 3},
+    config = { extra = { repetitions = 2 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.mult } }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.cardarea == G.play and context.repetition and not context.repetition_only then
+            if context.other_card:get_id() == 4 then
+                return {
+                    message = localize('k_again_ex'),
+                    repetitions = card.ability.extra.repetitions,
+                    card = card
+                }
+            end
+        end
+    end
+}
+
+SMODS.Joker{ -- Ambassador Teto
+    key = "ambassadorteto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 7,
+    pos = {x = 3, y = 3},
+    config = { extra = { xmult = 1.5 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    calculate = function(self, card, context)        
+        if context.individual and context.cardarea == G.hand and not context.end_of_round and not context.blueprint then
+            if context.other_card:is_suit("Clubs") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Diamonds')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Diamonds") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Spades')
+                        return true
+                    end
+                }))
+            end
+            if context.other_card:is_suit("Spades") then
+                local other_card = context.other_card
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        other_card:change_suit('Hearts')
+                        return true
+                    end
+                }))
+            end
+            if not context.other_card:is_suit("Hearts") then
+                return { message = "BLOOD!", colour = G.C.RED }
+            end
+        end
+
+        if context.individual and context.cardarea == G.hand and not context.end_of_round then
+            if context.other_card:is_suit("Hearts") then
+                if context.other_card:get_id() == 4 then
+                    return {
+                        xmult = card.ability.extra.xmult + 1.5
+                    }
+                else
+                    return {
+                        xmult = card.ability.extra.xmult
+                    }
+                end
+            end
+        end
+    end
+}
+
+SMODS.Joker{ -- Pear
+    key = "pear",
+    blueprint_compat = true,
+    eternal_compat = false,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 1,
+    cost = 6,
+    pos = {x = 4, y = 3},
+    config = { extra = { levels = 2, pear = 5, pear_loss = 1 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels, card.ability.extra.pear, card.ability.extra.pear_loss} }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.after and context.main_eval and not context.blueprint and context.scoring_name == "Pair" then
+            if card.ability.extra.pear - card.ability.extra.pear_loss <= 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('tarot1')
+                        card.T.r = -0.2
+                        card:juice_up(0.3, 0.4)
+                        card.states.drag.is = true
+                        card.children.center.pinch.x = true
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.3,
+                            blockable = false,
+                            func = function()
+                                card:remove()
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+                G.GAME.pool_flags.nic_pear_gone = true
+                return {
+                    message = "NOM :(",
+                    colour = G.C.RED
+                }
+            else
+                card.ability.extra.pear = card.ability.extra.pear - card.ability.extra.pear_loss
+            end
+        end
+
+        if context.before and context.main_eval and context.scoring_name == "Pair" then
+            return {
+                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
+                message = "TETO PEAR!", 
+                colour = G.C.RED
+            }
+        end
+    end
+}
+
+SMODS.Joker{ -- Pearto
+    key = "pearto",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 2,
+    cost = 7,
+    pos = {x = 5, y = 3},
+    config = { extra = { levels = 3, mult = 0, chips = 0 } },
+    pools = { Food = true },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels, card.ability.extra.mult, card.ability.extra.chips } }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    in_pool = function(self, args)
+        return G.GAME.pool_flags.nic_pear_gone
+    end,
+
+    calculate = function(self, card, context)
+        if context.before and context.main_eval and context.scoring_name == "Pair" then
+            return {
+                level_up = card.ability.extra.levels, level_up_hand = "Pair", 
+                message = "TETO PEAR!", 
+                colour = G.C.RED
+            }
+        end
+
+        if context.joker_main then
+            card.ability.extra.mult = G.GAME.hands["Pair"].played * 10
+            card.ability.extra.chips = to_number(G.GAME.hands["Pair"].level) * 50
+            return {
+                mult = card.ability.extra.mult,
+                chips = card.ability.extra.chips
+            }
+        end
+    end
+}
+
+SMODS.Joker{ -- Doctor Kidori
+    key = "doctorkidori",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 4,
+    cost = 20,
+    pos = {x = 0, y = 3},
+    soul_pos = {x = 1, y = 3},
+    config = { extra = { xmult = 2, doctorkidori_right = 1 } },
+
+    loc_vars = function(self, info_queue, card)
+    if G.jokers and card.area == G.jokers then 
+        local compatible = G.jokers.cards[#G.jokers.cards]
+    end
+
+        return { vars = { card.ability.extra.xmult } }
+    end,
+
+    set_badges = function(self, card, badges)
+        badges[#badges] = create_badge('Teto', HEX('e15d73'), G.C.WHITE, 1.2)
+    end,
+
+    calculate = function(self, card, context)
+        if G.jokers.cards[#G.jokers.cards] == card then
+            if context.evaluate_poker_hand then
+                return {
+                    replace_scoring_name = "Pair"
+                }
+            end
+        end
+
+        if context.individual and context.cardarea == G.play then
+            if context.other_card.ability.perma_mult <= 0 then 
+                context.other_card.ability.perma_mult = 1
+            end
+            if context.other_card.ability.perma_bonus <= 0 then 
+                context.other_card.ability.perma_bonus = 1
+            end
+            context.other_card.ability.perma_mult = context.other_card.ability.perma_mult * 2
+            context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus * 2
+            if context.other_card:get_id() == 4 then
+                return {
+                    xmult = card.ability.extra.xmult
+                }
+            end
+        end
+    end
+} 
+
+-- SCRAP
+
+SMODS.Joker{ -- Pot of Greed
+    key = "potofgreed",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'potofgreedjoke',
+    rarity = 1,
+    cost = 1,
+    pos = {x = 0, y = 0},
+    config = { extra = { mult = 4 } },
+
+    calculate = function(self, card, context)
+        if context.selling_self and not context.blueprint then
+            card:start_dissolve({G.C.RED})
+            for i=1, 2 do
+                local copy = copy_card(card)
+                copy:add_to_deck()
+                copy.ability.extra_value = -copy.cost
+                card.area:emplace(copy)
+            end
+        end
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
+    end
+}
+
+--[[SMODS.Joker{ -- Reroll Gimmick
+    key = "yup",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'nicjokers',
+    rarity = 3,
+    cost = 10,
+    pos = {x = 3, y = 0},
+
+    add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(2)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(-2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.reroll_shop then
+            G.GAME.current_round.free_rerolls = 2
+        end
+    end
+}]]

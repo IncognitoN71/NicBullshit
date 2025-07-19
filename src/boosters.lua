@@ -39,7 +39,6 @@ SMODS.Booster{
 
 SMODS.ObjectType{
     key = "tetojokers",
-    default = 'j_nic_kasanejokto',
     cards = {
         ['j_nic_kasanejokto'] = true,
         ['j_nic_ambassadorteto'] = true,

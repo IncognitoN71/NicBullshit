@@ -2,10 +2,27 @@ SMODS.current_mod.set_debuff = function(card) -- Debuff
     if next(SMODS.find_card("j_nic_incognito")) and card.playing_card and card:is_suit("Spades") then
         return "prevent_debuff"
     end
+    if next(SMODS.find_card("j_nic_doctorkidori")) and card.playing_card and card:get_id() == 4 then
+        return "prevent_debuff"
+    end
 end
 
 to_big = to_big or function(num)
     return num
+end
+
+local getidref = Card.get_id -- Cards are Considered Rank
+function Card:get_id()
+	if not getiduse then
+		getiduse = true
+		local id = getidref(self) or self.base.id
+		if next(SMODS.find_card('j_nic_doctorkidori')) and id >= 2 then id = 4 end
+		getiduse = false
+		return id
+	else
+		getiduse = false
+		return getidref(self)
+	end
 end
 
 nic = {} -- Vouchers/Boosters
@@ -51,6 +68,11 @@ function love.keypressed(key)
     if key == "d" then
         if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
             SMODS.calculate_context({ key_press_d = true })
+        end
+    end
+    if key == "f1" then
+        if G and G.jokers and G.jokers.cards and not G.SETTINGS.paused then
+            SMODS.calculate_context({ key_press_f1 = true })
         end
     end
     return (nicmodpress(key))
